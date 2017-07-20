@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import org.bitbucket.globehacks.views.fragments.HomeFragment;
 import org.bitbucket.globehacks.views.fragments.SignupFragment;
 
 import butterknife.ButterKnife;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_frame, SignupFragment.newInstance(), SignupFragment.class.getSimpleName())
+                .replace(R.id.main_frame, HomeFragment.newInstance(), HomeFragment.class.getSimpleName())
                 .commit();
     }
 }

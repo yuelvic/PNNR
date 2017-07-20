@@ -4,4 +4,7 @@
     <string name="api_key_mapbox">pk.eyJ1IjoiZW1tYW5nYXJjaWEiLCJhIjoiY2ozanFlMWlmMDBkcDMycnptYnA5MGQ4dyJ9.vt5kZ7bd4c_00ll9-huHhg</string>
     <string name="api_key_kinvey">kid_B1PCt3aB-</string>
     <string name="api_secret_kinvey">baab292869804304acc6669d94e7f2af</string>
+
+    <string name="action_bottom_home">Home</string>
+    <string name="action_bottom_profile">Profile</string>
 </resources>
