@@ -22,67 +22,118 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="@dimen/margin_padding_size_large">
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_pnnr" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_padding_size_large"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="PNNR CHOOSE SIGN UP METHOD"
-                android:textColor="@color/colorWhite" />
+                android:orientation="horizontal">
 
-            <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_signup_google"
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/colorWhite"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_padding_size_large"
+                    android:gravity="start|center_vertical"
+                    android:text="SIGN UP"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_size_xlarge" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                fancy:fb_defaultColor="@color/colorGooglePrimary"
-                fancy:fb_focusColor="@color/colorGooglePrimaryDark"
-                fancy:fb_radius="5dp"
-                fancy:fb_text="Sign up using Google"
-                fancy:fb_textColor="@color/colorWhite" />
+                android:orientation="vertical"
+                android:padding="@dimen/margin_padding_size_large">
+                <EditText
+                    android:id="@+id/edt_firstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_size_small"
+                    android:backgroundTint="@color/colorWhite"
+                    android:gravity="center_horizontal"
+                    android:hint="first name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhiteAsh" />
+                <EditText
+                    android:id="@+id/edt_lastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_size_small"
+                    android:backgroundTint="@color/colorWhite"
+                    android:gravity="center_horizontal"
+                    android:hint="last name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhiteAsh" />
 
+                <EditText
+                    android:id="@+id/edt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_size_small"
+                    android:backgroundTint="@color/colorWhite"
+                    android:gravity="center_horizontal"
+                    android:hint="email address"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhiteAsh" />
 
-            <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_signup_fb"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_padding_size_medium"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                fancy:fb_defaultColor="@color/colorFacebookPrimary"
-                fancy:fb_focusColor="@color/colorWhite"
-                fancy:fb_radius="5dp"
-                fancy:fb_text="Sign up using Facebook"
-                fancy:fb_textColor="@color/colorWhite" />
+                <EditText
+                    android:id="@+id/edt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_size_small"
+                    android:backgroundTint="@color/colorWhite"
+                    android:gravity="center_horizontal"
+                    android:hint="password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhiteAsh" />
 
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_signup_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_padding_size_large"
+                    android:layout_marginRight="@dimen/margin_padding_size_large"
+                    android:layout_marginTop="@dimen/margin_padding_size_medium"
+                    android:padding="@dimen/margin_padding_size_medium"
+                    fancy:fb_defaultColor="@color/colorPrimary"
+                    fancy:fb_focusColor="@color/colorPrimaryDark"
+                    fancy:fb_radius="20dp"
+                    fancy:fb_text="Sign up"
+                    fancy:fb_textColor="@color/colorWhite" />
 
-            <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_signup_cancel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_padding_size_medium"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                fancy:fb_defaultColor="@color/colorGrayDark"
-                fancy:fb_focusColor="@color/colorGray"
-                fancy:fb_radius="5dp"
-                fancy:fb_text="Cancel"
-                fancy:fb_textColor="@color/colorWhite" />
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_signup_cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_padding_size_large"
+                    android:layout_marginRight="@dimen/margin_padding_size_large"
+                    android:layout_marginTop="@dimen/margin_padding_size_medium"
+                    android:padding="@dimen/margin_padding_size_medium"
+                    fancy:fb_defaultColor="@color/colorGrayDark"
+                    fancy:fb_focusColor="@color/colorGray"
+                    fancy:fb_radius="20dp"
+                    fancy:fb_text="Cancel"
+                    fancy:fb_textColor="@color/colorWhite" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>
