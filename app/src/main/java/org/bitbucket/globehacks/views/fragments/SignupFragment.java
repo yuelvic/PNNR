@@ -29,6 +29,11 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
 
     @Inject Client kinveyClient;
 
+    public static SignupFragment newInstance() {
+        SignupFragment signupFragment = new SignupFragment();
+        return signupFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
