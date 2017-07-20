@@ -12,8 +12,8 @@ import com.kinvey.android.Client;
 
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
-import org.bitbucket.globehacks.presenters.SignupPresenter;
-import org.bitbucket.globehacks.views.interfaces.SignupView;
+import org.bitbucket.globehacks.presenters.LoginPresenter;
+import org.bitbucket.globehacks.views.interfaces.LoginView;
 
 import javax.inject.Inject;
 
@@ -23,16 +23,16 @@ import butterknife.ButterKnife;
  * Created by Emmanuel Victor Garcia on 7/20/17.
  */
 
-public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> implements SignupView {
+public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implements LoginView {
 
-    private static final String TAG = SignupFragment.class.getSimpleName();
+    private static final String TAG = LoginFragment.class.getSimpleName();
 
     @Inject Client kinveyClient;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_signup, container, false);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override
@@ -45,8 +45,8 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
 
     @NonNull
     @Override
-    public SignupPresenter createPresenter() {
-        return new SignupPresenter();
+    public LoginPresenter createPresenter() {
+        return new LoginPresenter();
     }
 
     @Override
@@ -66,26 +66,6 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
 
     @Override
     public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getEmail() {
-        return null;
-    }
-
-    @Override
-    public String getFirstName() {
-        return null;
-    }
-
-    @Override
-    public String getLastName() {
-        return null;
-    }
-
-    @Override
-    public String getUserType() {
         return null;
     }
 
