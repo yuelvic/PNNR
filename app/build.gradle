@@ -69,4 +69,8 @@ dependencies {
     compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:5.1.0@aar'){
         transitive=true
     }
+
+    // user interface
+    compile 'com.github.medyo:fancybuttons:1.8.3'
+
 }

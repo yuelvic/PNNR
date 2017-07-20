@@ -1,6 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_signup" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_padding_size_large">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_pnnr" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_padding_size_large"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="PNNR CHOOSE SIGN UP METHOD"
+                android:textColor="@color/colorWhite" />
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_signup_google"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_defaultColor="@color/colorGooglePrimary"
+                fancy:fb_focusColor="@color/colorGooglePrimaryDark"
+                fancy:fb_radius="5dp"
+                fancy:fb_text="Sign up using Google"
+                fancy:fb_textColor="@color/colorWhite" />
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_signup_fb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_defaultColor="@color/colorFacebookPrimary"
+                fancy:fb_focusColor="@color/colorWhite"
+                fancy:fb_radius="5dp"
+                fancy:fb_text="Sign up using Facebook"
+                fancy:fb_textColor="@color/colorWhite" />
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_signup_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_defaultColor="@color/colorGrayDark"
+                fancy:fb_focusColor="@color/colorGray"
+                fancy:fb_radius="5dp"
+                fancy:fb_text="Cancel"
+                fancy:fb_textColor="@color/colorWhite" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
