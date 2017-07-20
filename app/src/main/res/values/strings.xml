@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GlobeHacks</string>
+    <string name="app_name">PNNR</string>
 
     <string name="api_key_mapbox">pk.eyJ1IjoiZW1tYW5nYXJjaWEiLCJhIjoiY2ozanFlMWlmMDBkcDMycnptYnA5MGQ4dyJ9.vt5kZ7bd4c_00ll9-huHhg</string>
     <string name="api_key_kinvey">kid_B1PCt3aB-</string>
