@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">GlobeHacks</string>
 
+    <string name="api_base_url">https://api.backendless.com/</string>
+
     <string name="api_key_mapbox">pk.eyJ1IjoiZW1tYW5nYXJjaWEiLCJhIjoiY2ozanFlMWlmMDBkcDMycnptYnA5MGQ4dyJ9.vt5kZ7bd4c_00ll9-huHhg</string>
-    <string name="api_key_kinvey">kid_B1PCt3aB-</string>
-    <string name="api_secret_kinvey">baab292869804304acc6669d94e7f2af</string>
+    <string name="api_key_application">38719FDF-0792-C5A7-FFF4-7B44CC882200</string>
+    <string name="api_key_rest">B8761DDD-90EC-5EB6-FF72-F373FD1AFD00</string>
 
     <string name="action_bottom_home">Home</string>
     <string name="action_bottom_profile">Profile</string>

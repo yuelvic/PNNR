@@ -8,14 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
-import com.kinvey.android.Client;
 
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.presenters.SignupPresenter;
 import org.bitbucket.globehacks.views.interfaces.SignupView;
-
-import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
@@ -26,8 +23,6 @@ import butterknife.ButterKnife;
 public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> implements SignupView {
 
     private static final String TAG = SignupFragment.class.getSimpleName();
-
-    @Inject Client kinveyClient;
 
     public static SignupFragment newInstance() {
         SignupFragment signupFragment = new SignupFragment();
@@ -94,8 +89,4 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
         return null;
     }
 
-    @Override
-    public Client getKinveyClient() {
-        return kinveyClient;
-    }
 }

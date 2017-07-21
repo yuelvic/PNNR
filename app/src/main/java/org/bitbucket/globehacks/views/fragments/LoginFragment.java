@@ -8,14 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
-import com.kinvey.android.Client;
 
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.presenters.LoginPresenter;
 import org.bitbucket.globehacks.views.interfaces.LoginView;
-
-import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
@@ -26,8 +23,6 @@ import butterknife.ButterKnife;
 public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implements LoginView {
 
     private static final String TAG = LoginFragment.class.getSimpleName();
-
-    @Inject Client kinveyClient;
 
     @Nullable
     @Override
@@ -69,8 +64,4 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
         return null;
     }
 
-    @Override
-    public Client getKinveyClient() {
-        return kinveyClient;
-    }
 }

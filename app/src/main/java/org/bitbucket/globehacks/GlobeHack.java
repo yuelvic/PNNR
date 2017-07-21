@@ -2,13 +2,12 @@ package org.bitbucket.globehacks;
 
 import android.app.Application;
 
-import com.kinvey.android.Client;
 import com.mapbox.mapboxsdk.Mapbox;
 
-import org.bitbucket.globehacks.components.DaggerEntityComponent;
-import org.bitbucket.globehacks.components.EntityComponent;
+import org.bitbucket.globehacks.components.DaggerNetworkComponent;
+import org.bitbucket.globehacks.components.NetworkComponent;
 import org.bitbucket.globehacks.modules.ApplicationModule;
-import org.bitbucket.globehacks.modules.EntityModule;
+import org.bitbucket.globehacks.modules.NetworkModule;
 
 import timber.log.Timber;
 
@@ -18,16 +17,16 @@ import timber.log.Timber;
 
 public class GlobeHack extends Application {
 
-    private EntityComponent entityComponent;
+    private NetworkComponent entityComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         // Initialize dependency injection
-        entityComponent = DaggerEntityComponent.builder()
+        entityComponent = DaggerNetworkComponent.builder()
                 .applicationModule(new ApplicationModule(this))
-                .entityModule(new EntityModule())
+                .entityModule(new NetworkModule(getString(R.string.api_base_url)))
                 .build();
 
         // Plant a tree to get logs
@@ -37,7 +36,7 @@ public class GlobeHack extends Application {
         Mapbox.getInstance(this, getString(R.string.api_key_mapbox));
     }
 
-    public EntityComponent getEntityComponent() {
+    public NetworkComponent getEntityComponent() {
         return entityComponent;
     }
 
