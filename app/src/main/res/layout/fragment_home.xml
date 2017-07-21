@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/nav_view"
@@ -11,22 +12,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
-        app:itemTextColor="@android:color/white"
         app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
         app:menu="@menu/menu_bottom_navigation"/>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_padding_size_medium"
-        android:layout_alignParentEnd="true"
         android:layout_above="@id/nav_view"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/margin_padding_size_medium"
         android:elevation="@dimen/margin_padding_size_small"
         android:src="@drawable/ic_add"/>
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:mapbox_cameraZoom="14"
+        app:mapbox_cameraZoomMin="6"
+        app:mapbox_myLocation="true"
+        app:mapbox_styleUrl="@string/mapbox_style_mapbox_streets"/>
 
 </RelativeLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GlobeHacks</string>
+    <string name="app_name">PNNR</string>
 
     <string name="api_base_url">https://api.backendless.com/</string>
 
