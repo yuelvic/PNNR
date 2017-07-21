@@ -44,6 +44,8 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
     EditText edt_lastname;
     @BindView(R.id.spn_usertype)
     Spinner spn_usertype;
+    @BindView(R.id.cbx_signup_agreement)
+    Spinner cbx_signup_agreement;
 
     @Inject ApiService apiService;
 
@@ -66,12 +68,12 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
         ((GlobeHack) getActivity().getApplication()).getEntityComponent().inject(this);
     }
 
-    @OnClick(R.id.btn_signup_confirm)
+    @OnClick(R.id.btn_confirm)
     public void signup() {
         presenter.register();
     }
 
-    @OnClick(R.id.btn_signup_cancel)
+    @OnClick(R.id.btn_cancel)
     public void redirectToLogin() {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
