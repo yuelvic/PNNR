@@ -9,6 +9,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -26,14 +27,24 @@ public interface ApiService {
     Observable<User> login(@Path("app_id") String app_id, @Path("rest_key") String rest_key, @Body User user);
 
     @GET("{app_id}/{rest_key}/users/isvalidusertoken/{token}")
-    Observable<Boolean> validateSession(@Path("app_id") String app_id, @Path("rest_key") String rest_key, @Path("token") String token);
+    Observable<Boolean> validateSession(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+                                        @Path("token") String token);
 
     @GET("{app_id}/{rest_key}/users/logout")
-    Observable<Boolean> logout(@Path("app_id") String app_id, @Path("rest_key") String rest_key, @Header("user-token") String token);
+    Observable<Boolean> logout(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+                               @Header("user-token") String token);
 
     @Headers("Content-Type:application/json")
     @POST("{app_id}/{rest_key}/data/Store")
     Observable<Store> putStore(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
                                @Header("user-token") String token, @Body Store store);
+
+    @GET("{app_id}/{rest_key}/data/Store/{object_id}")
+    Observable<Store> getStore(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+                               @Header("user-token") String token, @Path("object_id") String objectId);
+
+    @GET("{app_id}/{rest_key}/data/Store")
+    Observable<Store> getStores(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+                                @Header("user-token") String token, @Query("where") String query);
 
 }
