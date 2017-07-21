@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
@@ -29,6 +31,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @BindView(R.id.map_view) MapView mapView;
 
+    private CameraPosition cameraPosition;
+
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
         return homeFragment;
@@ -48,7 +52,13 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(mapboxMap -> {
+            if (mapboxMap.getMyLocation() == null) return;
 
+            cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(mapboxMap.getMyLocation()))
+                    .build();
+
+            mapboxMap.setCameraPosition(cameraPosition);
         });
     }
 
