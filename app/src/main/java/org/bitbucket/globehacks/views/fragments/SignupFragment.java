@@ -12,12 +12,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
+import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.HomeActivity;
 import org.bitbucket.globehacks.R;
+import org.bitbucket.globehacks.models.User;
 import org.bitbucket.globehacks.presenters.SignupPresenter;
 import org.bitbucket.globehacks.services.ApiService;
+import org.bitbucket.globehacks.utils.Keys;
 import org.bitbucket.globehacks.views.interfaces.SignupView;
 
 import javax.inject.Inject;
@@ -64,6 +67,9 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
         ButterKnife.bind(this, view);
         presenter.init();
         ((GlobeHack) getActivity().getApplication()).getEntityComponent().inject(this);
+
+        if (PreferencesManager.getObject(Keys.USER, User.class) != null)
+            onSuccess();
     }
 
     @OnClick(R.id.btn_signup_confirm)

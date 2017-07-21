@@ -1,5 +1,6 @@
 package org.bitbucket.globehacks.services;
 
+import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.User;
 
 import retrofit2.http.Body;
@@ -29,5 +30,10 @@ public interface ApiService {
 
     @GET("{app_id}/{rest_key}/users/logout")
     Observable<Boolean> logout(@Path("app_id") String app_id, @Path("rest_key") String rest_key, @Header("user-token") String token);
+
+    @Headers("Content-Type:application/json")
+    @POST("{app_id}/{rest_key}/data/Store")
+    Observable<Store> putStore(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+                               @Header("user-token") String token, @Body Store store);
 
 }
