@@ -3,25 +3,16 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_signup" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:layout_centerInParent="true"
             android:orientation="vertical">
 
 
@@ -32,14 +23,14 @@
 
                 <View
                     android:layout_width="7dp"
-                    android:layout_height="60dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
                     android:background="@color/colorAccent" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_padding_size_large"
+                    android:layout_marginLeft="@dimen/margin_padding_size_large"
                     android:gravity="start|center_vertical"
                     android:text="SIGN UP"
                     android:textColor="@color/colorAccent"
@@ -52,33 +43,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/margin_padding_size_large">
+                android:paddingLeft="@dimen/margin_padding_size_medium"
+                android:paddingRight="@dimen/margin_padding_size_medium">
 
                 <EditText
-                    android:id="@+id/edt_firstname"
+                    android:id="@+id/edt_contact_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_padding_size_small"
                     android:backgroundTint="@color/colorAccent"
                     android:gravity="center_horizontal"
-                    android:hint="first name"
-                    android:inputType="text"
+                    android:hint="contact number"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorGray" />
-
-                <EditText
-                    android:id="@+id/edt_lastname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_padding_size_small"
-                    android:backgroundTint="@color/colorAccent"
-                    android:gravity="center_horizontal"
-                    android:hint="last name"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorGray" />
+                    android:textColorHint="@color/colorWhiteAsh" />
 
                 <EditText
                     android:id="@+id/edt_email"
@@ -88,10 +67,10 @@
                     android:backgroundTint="@color/colorAccent"
                     android:gravity="center_horizontal"
                     android:hint="email address"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorGray" />
+                    android:textColorHint="@color/colorWhiteAsh" />
 
                 <EditText
                     android:id="@+id/edt_password"
@@ -104,7 +83,41 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorGray" />
+                    android:textColorHint="@color/colorWhiteAsh" />
+
+                <EditText
+                    android:id="@+id/edt_firstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_size_small"
+                    android:backgroundTint="@color/colorAccent"
+                    android:gravity="center_horizontal"
+                    android:hint="first name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhiteAsh" />
+
+                <EditText
+                    android:id="@+id/edt_lastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_size_small"
+                    android:backgroundTint="@color/colorAccent"
+                    android:gravity="center_horizontal"
+                    android:hint="last name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhiteAsh" />
+
+                <Spinner
+                    android:id="@+id/spn_usertype"
+                    android:layout_width="match_parent"
+                    android:minHeight="50dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:layout_height="wrap_content">
+                </Spinner>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -125,6 +138,7 @@
                         android:textColor="@color/colorWhite"
                         android:text="I agree with the Terms and Agreements"/>
                 </RelativeLayout>
+
 
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/btn_signup_confirm"
@@ -155,7 +169,7 @@
                     fancy:fb_radius="20dp"
                     fancy:fb_text="Cancel"
                     fancy:fb_textColor="@color/colorWhite" />
+
             </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
 </RelativeLayout>
