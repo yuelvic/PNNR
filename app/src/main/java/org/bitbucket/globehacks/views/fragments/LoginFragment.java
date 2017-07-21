@@ -6,15 +6,20 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.presenters.LoginPresenter;
+import org.bitbucket.globehacks.services.ApiService;
 import org.bitbucket.globehacks.views.interfaces.LoginView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
  * Created by Emmanuel Victor Garcia on 7/20/17.
@@ -43,6 +48,14 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
         ((GlobeHack) getActivity().getApplication()).getEntityComponent().inject(this);
     }
 
+    @OnClick(R.id.btn_login_signup)
+    public void redirectToSignup() {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, SignupFragment.newInstance(), SignupFragment.class.getSimpleName())
+                .commit();
+    }
+
     @NonNull
     @Override
     public LoginPresenter createPresenter() {
@@ -69,4 +82,18 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
         return null;
     }
 
+    @Override
+    public String getApplicationId() {
+        return null;
+    }
+
+    @Override
+    public String getRestKey() {
+        return null;
+    }
+
+    @Override
+    public ApiService getApiService() {
+        return null;
+    }
 }

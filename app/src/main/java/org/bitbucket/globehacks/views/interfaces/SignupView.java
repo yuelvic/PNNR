@@ -13,6 +13,7 @@ public interface SignupView extends BaseView {
     String getPassword();
 
     String getEmail();
+    String getMobile();
     String getFirstName();
     String getLastName();
 

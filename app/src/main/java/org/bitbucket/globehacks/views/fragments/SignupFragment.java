@@ -12,9 +12,13 @@ import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.presenters.SignupPresenter;
+import org.bitbucket.globehacks.services.ApiService;
 import org.bitbucket.globehacks.views.interfaces.SignupView;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Emmanuel Victor Garcia on 7/20/17.
@@ -23,6 +27,8 @@ import butterknife.ButterKnife;
 public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> implements SignupView {
 
     private static final String TAG = SignupFragment.class.getSimpleName();
+
+    @Inject ApiService apiService;
 
     public static SignupFragment newInstance() {
         SignupFragment signupFragment = new SignupFragment();
@@ -41,6 +47,19 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
         ButterKnife.bind(this, view);
         presenter.init();
         ((GlobeHack) getActivity().getApplication()).getEntityComponent().inject(this);
+    }
+
+    @OnClick(R.id.btn_signup_confirm)
+    public void signup() {
+        presenter.register();
+    }
+
+    @OnClick(R.id.btn_signup_cancel)
+    public void redirectToLogin() {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, LoginFragment.newInstance(), LoginFragment.class.getSimpleName())
+                .commit();
     }
 
     @NonNull
@@ -75,6 +94,11 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
     }
 
     @Override
+    public String getMobile() {
+        return null;
+    }
+
+    @Override
     public String getFirstName() {
         return null;
     }
@@ -89,4 +113,18 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
         return null;
     }
 
+    @Override
+    public String getApplicationId() {
+        return getString(R.string.api_key_application);
+    }
+
+    @Override
+    public String getRestKey() {
+        return getString(R.string.api_key_rest);
+    }
+
+    @Override
+    public ApiService getApiService() {
+        return apiService;
+    }
 }
