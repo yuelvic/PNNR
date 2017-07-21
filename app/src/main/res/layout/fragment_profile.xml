@@ -50,7 +50,7 @@
 
 
                     <TextView
-                        android:id="@+id/tv_profile_fullname"
+                        android:id="@+id/tv_fullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Emman Garcia"
@@ -59,7 +59,7 @@
                         android:textSize="@dimen/text_size_large" />
 
                     <TextView
-                        android:id="@+id/tv_profile_number"
+                        android:id="@+id/tv_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="09167237988"
@@ -68,7 +68,7 @@
                         android:textSize="@dimen/text_size_medium" />
 
                     <TextView
-                        android:id="@+id/tv_profile_type"
+                        android:id="@+id/tv_user_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Customer"
