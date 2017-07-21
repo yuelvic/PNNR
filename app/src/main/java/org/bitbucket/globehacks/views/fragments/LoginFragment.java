@@ -24,6 +24,11 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
 
     private static final String TAG = LoginFragment.class.getSimpleName();
 
+    public static LoginFragment newInstance() {
+        LoginFragment loginFragment = new LoginFragment();
+        return loginFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

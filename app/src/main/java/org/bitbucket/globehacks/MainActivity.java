@@ -6,6 +6,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import org.bitbucket.globehacks.views.fragments.HomeFragment;
+import org.bitbucket.globehacks.views.fragments.LoginFragment;
+import org.bitbucket.globehacks.views.fragments.SignupFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_frame, HomeFragment.newInstance(), HomeFragment.class.getSimpleName())
+                .replace(R.id.main_frame, LoginFragment.newInstance(), LoginFragment.class.getSimpleName())
                 .commit();
     }
 }

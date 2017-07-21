@@ -6,111 +6,104 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
-
-    <RelativeLayout
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true">
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_signup" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_signup" />
+            android:layout_height="150dp"
+            android:src="@drawable/ic_pnnr"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_padding_size_medium"
+            android:text="Let's Locate the Globe Community Together"
+            android:textColor="@color/colorWhite" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_padding_size_large">
 
 
-           <ImageView
-               android:layout_width="match_parent"
-               android:layout_height="150dp"
-               android:src="@drawable/ic_pnnr"/>
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:backgroundTint="@color/colorAccent"
+                android:gravity="center_horizontal"
+                android:hint="email address"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorGray" />
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:backgroundTint="@color/colorAccent"
+                android:gravity="center_horizontal"
+                android:hint="password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorGray" />
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/margin_padding_size_small"
+                android:layout_marginRight="@dimen/margin_padding_size_small"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:padding="@dimen/margin_padding_size_medium"
+                fancy:fb_defaultColor="@color/colorAccent"
+                fancy:fb_focusColor="@color/colorAccentDark"
+                fancy:fb_radius="20dp"
+                fancy:fb_text="Login"
+                fancy:fb_textColor="@color/colorWhite" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
-                android:text="Let's Locate the Globe Community Together"
+                android:text="No Account Yet?"
                 android:textColor="@color/colorWhite" />
 
-
-            <LinearLayout
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_login_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_padding_size_large">
-
-
-
-                <EditText
-                    android:id="@+id/edt_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_padding_size_small"
-                    android:backgroundTint="@color/colorAccent"
-                    android:gravity="center_horizontal"
-                    android:hint="email address"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorGray" />
-
-                <EditText
-                    android:id="@+id/edt_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_padding_size_small"
-                    android:backgroundTint="@color/colorAccent"
-                    android:gravity="center_horizontal"
-                    android:hint="password"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorGray" />
-
-
-                <mehdi.sakout.fancybuttons.FancyButton
-                    android:id="@+id/btn_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="@dimen/margin_padding_size_small"
-                    android:layout_marginRight="@dimen/margin_padding_size_small"
-                    android:layout_marginTop="@dimen/margin_padding_size_medium"
-                    android:padding="@dimen/margin_padding_size_medium"
-                    fancy:fb_defaultColor="@color/colorAccent"
-                    fancy:fb_focusColor="@color/colorAccentDark"
-                    fancy:fb_radius="20dp"
-                    fancy:fb_text="Login"
-                    fancy:fb_textColor="@color/colorWhite" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/margin_padding_size_medium"
-                    android:text="No Account Yet?"
-                    android:textColor="@color/colorWhite" />
-
-                <mehdi.sakout.fancybuttons.FancyButton
-                    android:id="@+id/btn_login_signup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="@dimen/margin_padding_size_small"
-                    android:layout_marginRight="@dimen/margin_padding_size_small"
-                    android:padding="@dimen/margin_padding_size_medium"
-                    fancy:fb_defaultColor="@color/colorPrimary"
-                    fancy:fb_focusColor="@color/colorPrimaryDark"
-                    fancy:fb_radius="20dp"
-                    fancy:fb_text="Sign Up"
-                    fancy:fb_textColor="@color/colorWhite" />
-            </LinearLayout>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/margin_padding_size_small"
+                android:layout_marginRight="@dimen/margin_padding_size_small"
+                android:padding="@dimen/margin_padding_size_medium"
+                fancy:fb_defaultColor="@color/colorPrimary"
+                fancy:fb_focusColor="@color/colorPrimaryDark"
+                fancy:fb_radius="20dp"
+                fancy:fb_text="Sign Up"
+                fancy:fb_textColor="@color/colorWhite" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

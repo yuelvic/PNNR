@@ -26,7 +26,7 @@ public class GlobeHack extends Application {
         // Initialize dependency injection
         entityComponent = DaggerNetworkComponent.builder()
                 .applicationModule(new ApplicationModule(this))
-                .entityModule(new NetworkModule(getString(R.string.api_base_url)))
+                .networkModule(new NetworkModule(getString(R.string.api_base_url)))
                 .build();
 
         // Plant a tree to get logs
