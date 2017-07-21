@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
@@ -16,10 +15,8 @@ import org.bitbucket.globehacks.presenters.LoginPresenter;
 import org.bitbucket.globehacks.services.ApiService;
 import org.bitbucket.globehacks.views.interfaces.LoginView;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
  * Created by Emmanuel Victor Garcia on 7/20/17.

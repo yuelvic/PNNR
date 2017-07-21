@@ -47,7 +47,6 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
     @BindView(R.id.btn_signup_cancel)
     Button getBtn_signup_cancel;
 
-
     @Inject ApiService apiService;
 
     public static SignupFragment newInstance() {

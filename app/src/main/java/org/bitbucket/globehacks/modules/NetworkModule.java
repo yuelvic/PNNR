@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
+import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.services.ApiService;
 import org.bitbucket.globehacks.utils.Utilities;
 
@@ -80,9 +81,9 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    Interceptor interceptor(Context context) {
+    Interceptor interceptor(GlobeHack globeHack) {
         return chain -> {
-            if (Utilities.checkConnectionStatus(context) == null)
+            if (Utilities.checkConnectionStatus(globeHack) == null)
                 try {
                     throw new Exception();
                 } catch (Exception e) {
@@ -90,6 +91,12 @@ public class NetworkModule {
                 }
             return chain.proceed(chain.request());
         };
+    }
+
+    @Provides
+    @Singleton
+    Gson gson() {
+        return new Gson();
     }
 
 }
