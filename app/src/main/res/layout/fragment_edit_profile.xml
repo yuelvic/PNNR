@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_padding_size_large"
                     android:gravity="start|center_vertical"
-                    android:text="SIGN UP"
+                    android:text="EDIT PROFILE"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/text_size_xlarge" />
             </LinearLayout>
@@ -71,18 +71,6 @@
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorWhiteAsh" />
 
-                <EditText
-                    android:id="@+id/edt_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_padding_size_small"
-                    android:backgroundTint="@color/colorAccent"
-                    android:gravity="center_horizontal"
-                    android:hint="password"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhiteAsh" />
 
                 <EditText
                     android:id="@+id/edt_firstname"
@@ -118,28 +106,6 @@
                     android:layout_height="wrap_content">
                 </Spinner>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal">
-
-                    <CheckBox
-                        android:id="@+id/cbx_signup_agreement"
-                        android:layout_width="wrap_content"
-                        android:backgroundTint="@color/colorPrimaryDark"
-                        android:buttonTint="@color/colorWhite"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_toRightOf="@id/cbx_signup_agreement"
-                        android:layout_width="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
-                        android:text="I agree with the Terms and Agreements"/>
-                </RelativeLayout>
-
-
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/btn_confirm"
                     android:layout_width="match_parent"
@@ -152,7 +118,7 @@
                     fancy:fb_defaultColor="@color/colorPrimary"
                     fancy:fb_focusColor="@color/colorPrimaryDark"
                     fancy:fb_radius="20dp"
-                    fancy:fb_text="Sign up"
+                    fancy:fb_text="Update profile"
                     fancy:fb_textColor="@color/colorWhite" />
 
                 <mehdi.sakout.fancybuttons.FancyButton
