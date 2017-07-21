@@ -9,7 +9,7 @@ public interface LoginView extends BaseView {
     void onSuccess();
     void onFailure();
 
-    String getUsername();
+    String getEmail();
     String getPassword();
 
 }

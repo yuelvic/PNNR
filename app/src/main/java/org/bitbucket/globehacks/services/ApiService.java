@@ -16,11 +16,11 @@ import rx.Observable;
 
 public interface ApiService {
 
-    @Headers("Content-Type : application/json")
+    @Headers("Content-Type:application/json")
     @POST("{app_id}/{rest_key}/users/register")
     Observable<User> register(@Path("app_id") String app_id, @Path("rest_key") String rest_key, @Body User user);
 
-    @Headers("Content-Type : application/json")
+    @Headers("Content-Type:application/json")
     @POST("{app_id}/{rest_key}/users/login")
     Observable<User> login(@Path("app_id") String app_id, @Path("rest_key") String rest_key, @Body User user);
 

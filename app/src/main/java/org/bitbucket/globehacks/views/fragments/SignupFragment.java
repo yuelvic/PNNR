@@ -1,5 +1,6 @@
 package org.bitbucket.globehacks.views.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.widget.Spinner;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
 import org.bitbucket.globehacks.GlobeHack;
+import org.bitbucket.globehacks.HomeActivity;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.presenters.SignupPresenter;
 import org.bitbucket.globehacks.services.ApiService;
@@ -42,10 +44,6 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
     EditText edt_lastname;
     @BindView(R.id.spn_usertype)
     Spinner spn_usertype;
-    @BindView(R.id.btn_signup_confirm)
-    Button btn_signup_confirm;
-    @BindView(R.id.btn_signup_cancel)
-    Button getBtn_signup_cancel;
 
     @Inject ApiService apiService;
 
@@ -89,7 +87,8 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
 
     @Override
     public void onSuccess() {
-
+        startActivity(new Intent(getActivity(), HomeActivity.class));
+        getActivity().finish();
     }
 
     @Override
@@ -114,7 +113,7 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
 
     @Override
     public String getMobile() {
-        return null;
+        return edt_contact_number.getText().toString();
     }
 
     @Override

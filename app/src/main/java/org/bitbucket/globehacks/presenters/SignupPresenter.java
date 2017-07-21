@@ -36,6 +36,10 @@ public class SignupPresenter extends MvpBasePresenter<SignupView> {
             signupSubscription.unsubscribe();
     }
 
+    /**
+     * Creates user from form
+     * @return User
+     */
     private User createUser() {
         User user = new User();
         user.setEmail(mView.getEmail());
@@ -43,6 +47,7 @@ public class SignupPresenter extends MvpBasePresenter<SignupView> {
         user.setLastname(mView.getLastName());
         user.setPassword(mView.getPassword());
         user.setMobile(mView.getMobile());
+        user.setType("owner");
 
         return user;
     }

@@ -1,20 +1,26 @@
 package org.bitbucket.globehacks.views.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
 import org.bitbucket.globehacks.GlobeHack;
+import org.bitbucket.globehacks.HomeActivity;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.presenters.LoginPresenter;
 import org.bitbucket.globehacks.services.ApiService;
 import org.bitbucket.globehacks.views.interfaces.LoginView;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -25,6 +31,11 @@ import butterknife.OnClick;
 public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implements LoginView {
 
     private static final String TAG = LoginFragment.class.getSimpleName();
+
+    @BindView(R.id.edt_email) EditText etEmail;
+    @BindView(R.id.edt_password) EditText etPassword;
+
+    @Inject ApiService apiService;
 
     public static LoginFragment newInstance() {
         LoginFragment loginFragment = new LoginFragment();
@@ -45,6 +56,11 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
         ((GlobeHack) getActivity().getApplication()).getEntityComponent().inject(this);
     }
 
+    @OnClick(R.id.btn_login)
+    public void login() {
+        presenter.login();
+    }
+
     @OnClick(R.id.btn_login_signup)
     public void redirectToSignup() {
         getActivity().getSupportFragmentManager()
@@ -61,7 +77,8 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
 
     @Override
     public void onSuccess() {
-
+        startActivity(new Intent(getActivity(), HomeActivity.class));
+        getActivity().finish();
     }
 
     @Override
@@ -70,27 +87,27 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
     }
 
     @Override
-    public String getUsername() {
-        return null;
+    public String getEmail() {
+        return etEmail.getText().toString();
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return etPassword.getText().toString();
     }
 
     @Override
     public String getApplicationId() {
-        return null;
+        return getString(R.string.api_key_application);
     }
 
     @Override
     public String getRestKey() {
-        return null;
+        return getString(R.string.api_key_rest);
     }
 
     @Override
     public ApiService getApiService() {
-        return null;
+        return apiService;
     }
 }

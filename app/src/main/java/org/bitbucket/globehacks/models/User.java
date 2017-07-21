@@ -17,6 +17,7 @@ public class User {
     private String mobile;
     private String avatar;
     private String type;
+    private String login;
 
     @SerializedName("user-token")
     private String token;
@@ -91,6 +92,14 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getToken() {
