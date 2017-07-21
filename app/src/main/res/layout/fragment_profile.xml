@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="7dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_padding_size_large"
+                android:gravity="start|center_vertical"
+                android:text="CHANGE PASSWORD"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_xlarge" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_padding_size_medium"
+            android:paddingRight="@dimen/margin_padding_size_medium">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt_old_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_size_small"
+                    android:layout_weight="0.90"
+                    android:backgroundTint="@color/colorAccent"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="old password"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhiteAsh" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:src="@drawable/ic_show_pw"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt_new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_size_small"
+                    android:layout_weight="0.90"
+                    android:backgroundTint="@color/colorAccent"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="new password"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhiteAsh" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:src="@drawable/ic_show_pw"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt_confirm_new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_padding_size_small"
+                    android:layout_weight="0.90"
+                    android:backgroundTint="@color/colorAccent"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="confirm new password"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhiteAsh" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:src="@drawable/ic_show_pw"/>
+
+            </LinearLayout>
+
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_signup_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/margin_padding_size_small"
+                android:layout_marginRight="@dimen/margin_padding_size_small"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:padding="@dimen/margin_padding_size_medium"
+                fancy:fb_defaultColor="@color/colorPrimary"
+                fancy:fb_focusColor="@color/colorPrimaryDark"
+                fancy:fb_radius="20dp"
+                fancy:fb_text="Change Password"
+                fancy:fb_textColor="@color/colorWhite" />
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_signup_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/margin_padding_size_small"
+                android:layout_marginRight="@dimen/margin_padding_size_small"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:padding="@dimen/margin_padding_size_medium"
+                fancy:fb_defaultColor="@color/colorGrayDark"
+                fancy:fb_focusColor="@color/colorGray"
+                fancy:fb_radius="20dp"
+                fancy:fb_text="Cancel"
+                fancy:fb_textColor="@color/colorWhite" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
