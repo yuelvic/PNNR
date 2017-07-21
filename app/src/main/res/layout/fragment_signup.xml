@@ -35,7 +35,6 @@
                     android:text="SIGN UP"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/text_size_xlarge" />
-
             </LinearLayout>
 
 
