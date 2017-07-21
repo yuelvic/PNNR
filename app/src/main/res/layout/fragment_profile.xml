@@ -1,158 +1,152 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profile_frame"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    android:orientation="vertical">
+    android:background="@color/colorPrimary">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <View
-                android:layout_width="7dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:background="@color/colorAccent" />
 
-            <TextView
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_profile"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-220dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_profile" />
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_padding_size_large"
-                android:gravity="start|center_vertical"
-                android:text="CHANGE PASSWORD"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/text_size_xlarge" />
-        </LinearLayout>
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="-50dp"
+                android:orientation="vertical"
+                android:paddingTop="40dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:orientation="vertical"></LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/margin_padding_size_medium"
-            android:paddingRight="@dimen/margin_padding_size_medium">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/edt_old_password"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_padding_size_small"
-                    android:layout_weight="0.90"
-                    android:backgroundTint="@color/colorAccent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:hint="old password"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhiteAsh" />
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:src="@drawable/ic_show_pw"/>
 
+                    <TextView
+                        android:id="@+id/tv_profile_fullname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Emman Garcia"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_size_large" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="09167237988"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size_medium" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Customer"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size_medium" />
+
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@+id/btn_profile_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="@dimen/margin_padding_size_small"
+                        android:layout_marginRight="@dimen/margin_padding_size_small"
+                        android:layout_marginTop="@dimen/margin_padding_size_medium"
+                        android:padding="@dimen/margin_padding_size_medium"
+                        fancy:fb_defaultColor="@color/colorAccent"
+                        fancy:fb_focusColor="@color/colorAccentDark"
+                        fancy:fb_radius="20dp"
+                        fancy:fb_text="Edit Profile"
+                        fancy:fb_textColor="@color/colorWhite" />
+
+                </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/edt_new_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_padding_size_small"
-                    android:layout_weight="0.90"
-                    android:backgroundTint="@color/colorAccent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:hint="new password"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhiteAsh" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:src="@drawable/ic_show_pw"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/edt_confirm_new_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_padding_size_small"
-                    android:layout_weight="0.90"
-                    android:backgroundTint="@color/colorAccent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:hint="confirm new password"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhiteAsh" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:src="@drawable/ic_show_pw"/>
-
-            </LinearLayout>
-
-
-
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_signup_confirm"
+                android:id="@+id/btn_profile_preferences"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="@dimen/margin_padding_size_small"
                 android:layout_marginRight="@dimen/margin_padding_size_small"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:padding="@dimen/margin_padding_size_medium"
-                fancy:fb_defaultColor="@color/colorPrimary"
-                fancy:fb_focusColor="@color/colorPrimaryDark"
+                fancy:fb_defaultColor="@color/colorPrimaryDark"
+                fancy:fb_focusColor="@color/colorPrimary"
+                fancy:fb_radius="20dp"
+                fancy:fb_text="Edit Map Preferences"
+                fancy:fb_textColor="@color/colorWhite" />
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_profile_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/margin_padding_size_small"
+                android:layout_marginRight="@dimen/margin_padding_size_small"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:padding="@dimen/margin_padding_size_medium"
+                fancy:fb_defaultColor="@color/colorPrimaryDark"
+                fancy:fb_focusColor="@color/colorPrimary"
                 fancy:fb_radius="20dp"
                 fancy:fb_text="Change Password"
                 fancy:fb_textColor="@color/colorWhite" />
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_signup_cancel"
+                android:id="@+id/btn_profile_logout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="@dimen/margin_padding_size_small"
                 android:layout_marginRight="@dimen/margin_padding_size_small"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:padding="@dimen/margin_padding_size_medium"
-                fancy:fb_defaultColor="@color/colorGrayDark"
-                fancy:fb_focusColor="@color/colorGray"
+                fancy:fb_defaultColor="@color/colorPrimaryDark"
+                fancy:fb_focusColor="@color/colorPrimary"
                 fancy:fb_radius="20dp"
-                fancy:fb_text="Cancel"
+                fancy:fb_text="Logout"
                 fancy:fb_textColor="@color/colorWhite" />
-
         </LinearLayout>
-    </LinearLayout>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:tint="@color/colorWhite"
+        android:paddingTop="@dimen/margin_padding_size_medium"
+        android:paddingLeft="@dimen/margin_padding_size_small"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_back"/>
+
 </RelativeLayout>
