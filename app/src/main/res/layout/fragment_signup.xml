@@ -111,6 +111,14 @@
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorWhiteAsh" />
 
+                <Spinner
+                    android:id="@+id/spn_usertype"
+                    android:layout_width="match_parent"
+                    android:minHeight="50dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:layout_height="wrap_content">
+                </Spinner>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -130,6 +138,7 @@
                         android:textColor="@color/colorWhite"
                         android:text="I agree with the Terms and Agreements"/>
                 </RelativeLayout>
+
 
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/btn_signup_confirm"
@@ -160,7 +169,7 @@
                     fancy:fb_radius="20dp"
                     fancy:fb_text="Cancel"
                     fancy:fb_textColor="@color/colorWhite" />
+
             </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
 </RelativeLayout>
