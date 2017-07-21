@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 
@@ -16,7 +19,7 @@ import org.bitbucket.globehacks.services.ApiService;
 import org.bitbucket.globehacks.views.interfaces.SignupView;
 
 import javax.inject.Inject;
-
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -27,6 +30,23 @@ import butterknife.OnClick;
 public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> implements SignupView {
 
     private static final String TAG = SignupFragment.class.getSimpleName();
+    @BindView(R.id.edt_contact_number)
+    EditText edt_contact_number;
+    @BindView(R.id.edt_email)
+    EditText edt_email;
+    @BindView(R.id.edt_password)
+    EditText edt_password;
+    @BindView(R.id.edt_firstname)
+    EditText edt_firstname;
+    @BindView(R.id.edt_lastname)
+    EditText edt_lastname;
+    @BindView(R.id.spn_usertype)
+    Spinner spn_usertype;
+    @BindView(R.id.btn_signup_confirm)
+    Button btn_signup_confirm;
+    @BindView(R.id.btn_signup_cancel)
+    Button getBtn_signup_cancel;
+
 
     @Inject ApiService apiService;
 
@@ -80,17 +100,17 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
 
     @Override
     public String getUsername() {
-        return null;
+        return edt_contact_number.getText().toString();
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return edt_password.getText().toString();
     }
 
     @Override
     public String getEmail() {
-        return null;
+        return edt_email.getText().toString();
     }
 
     @Override
@@ -100,17 +120,17 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
 
     @Override
     public String getFirstName() {
-        return null;
+        return edt_firstname.getText().toString();
     }
 
     @Override
     public String getLastName() {
-        return null;
+        return edt_lastname.getText().toString();
     }
 
     @Override
     public String getUserType() {
-        return null;
+        return spn_usertype.getSelectedItem().toString();
     }
 
     @Override

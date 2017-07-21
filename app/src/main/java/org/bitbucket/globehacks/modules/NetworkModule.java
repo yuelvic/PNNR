@@ -34,7 +34,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    ApiService contentService(Retrofit retrofit) {
+    ApiService apiService(Retrofit retrofit) {
         return retrofit.create(ApiService.class);
     }
 
