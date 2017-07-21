@@ -3,6 +3,7 @@ package org.bitbucket.globehacks;
 import android.app.Application;
 
 import com.mapbox.mapboxsdk.Mapbox;
+import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.components.DaggerNetworkComponent;
 import org.bitbucket.globehacks.components.NetworkComponent;
@@ -34,6 +35,9 @@ public class GlobeHack extends Application {
 
         // Initialize map
         Mapbox.getInstance(this, getString(R.string.api_key_mapbox));
+
+        // Initialize preferences manager
+        new PreferencesManager(this).setName("globe-hacks").init();
     }
 
     public NetworkComponent getEntityComponent() {

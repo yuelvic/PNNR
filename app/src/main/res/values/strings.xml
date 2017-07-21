@@ -9,4 +9,6 @@
 
     <string name="action_bottom_home">Home</string>
     <string name="action_bottom_profile">Profile</string>
+
+    <string name="text_hint_geo">Search location</string>
 </resources>

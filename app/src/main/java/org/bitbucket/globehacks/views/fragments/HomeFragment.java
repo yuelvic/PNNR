@@ -3,14 +3,20 @@ package org.bitbucket.globehacks.views.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.services.android.ui.geocoder.GeocoderAutoCompleteView;
+import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
 
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.presenters.HomePresenter;
@@ -23,13 +29,15 @@ import butterknife.ButterKnife;
  * Created by Emmanuel Victor Garcia on 19/07/2017.
  */
 
-public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView {
+public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     @BindView(R.id.map_view) MapView mapView;
+    @BindView(R.id.geo_view) GeocoderAutoCompleteView geoView;
 
     private CameraPosition cameraPosition;
+    private MapboxMap mapboxMap;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -50,6 +58,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(mapboxMap -> {
+            this.mapboxMap = mapboxMap;
+            this.mapboxMap.setOnMapLongClickListener(this);
             if (mapboxMap.getMyLocation() == null) return;
 
             cameraPosition = new CameraPosition.Builder()
@@ -58,6 +68,9 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
             mapboxMap.setCameraPosition(cameraPosition);
         });
+
+        geoView.setAccessToken(Mapbox.getAccessToken());
+        geoView.setType(GeocodingCriteria.TYPE_POI);
     }
 
     @Override
@@ -109,4 +122,11 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         return new HomePresenter();
     }
 
+    @Override
+    public void onMapLongClick(@NonNull LatLng point) {
+        Log.d("Latlng", point.toString());
+
+        mapboxMap.clear();
+        mapboxMap.addMarker(new MarkerOptions().position(point).title("Dropped pin"));
+    }
 }

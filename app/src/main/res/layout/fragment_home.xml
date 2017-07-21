@@ -15,4 +15,15 @@
         app:mapbox_myLocation="true"
         app:mapbox_styleUrl="@string/mapbox_style_mapbox_streets"/>
 
+    <com.mapbox.services.android.ui.geocoder.GeocoderAutoCompleteView
+        android:id="@+id/geo_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/standard_touch_size"
+        android:layout_margin="@dimen/margin_padding_size_small"
+        android:padding="@dimen/margin_padding_size_medium"
+        android:background="@android:color/white"
+        android:textSize="@dimen/text_size_micro"
+        android:hint="@string/text_hint_geo"
+        android:maxLines="1" />
+
 </RelativeLayout>
