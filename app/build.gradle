@@ -68,7 +68,12 @@ dependencies {
         transitive=true
     }
 
-    // user interface
+    // custom components
     compile 'com.github.medyo:fancybuttons:1.8.3'
+
+    // custom loader
+    compile 'cn.pedant.sweetalert:library:1.3'
+
+
 
 }
