@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Emmanuel Victor Garcia on 7/20/17.
@@ -58,7 +59,11 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
 
     @OnClick(R.id.btn_login)
     public void login() {
-        presenter.login();
+        if (etEmail.getText().toString().trim().equals("") || etPassword.getText().toString().trim().equals("")) {
+            showWarningDialog();
+        } else {
+            presenter.login();
+        }
     }
 
     @OnClick(R.id.btn_login_signup)
@@ -83,7 +88,7 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
 
     @Override
     public void onFailure() {
-
+        showErrorDialog();
     }
 
     @Override
@@ -110,4 +115,22 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
     public ApiService getApiService() {
         return apiService;
     }
+
+
+    private void showWarningDialog() {
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("All fields required")
+                .setContentText("Please fill up all fields")
+                .setConfirmText("Close")
+                .show();
+    }
+
+    private void showErrorDialog() {
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Invalid Credentials")
+                .setContentText("Either username or password is incorrect")
+                .setConfirmText("Close")
+                .show();
+    }
+
 }

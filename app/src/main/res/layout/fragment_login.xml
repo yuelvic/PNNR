@@ -49,7 +49,7 @@
                 android:backgroundTint="@color/colorAccent"
                 android:gravity="center_horizontal"
                 android:hint="email address"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorGray" />

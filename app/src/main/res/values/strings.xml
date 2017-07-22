@@ -11,4 +11,8 @@
     <string name="action_bottom_profile">Profile</string>
 
     <string name="text_hint_geo">Search location</string>
+    <string-array name="user_type">
+        <item>Store Owner</item>
+        <item>Customer</item>
+    </string-array>
 </resources>
