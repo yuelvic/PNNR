@@ -1,5 +1,6 @@
 package org.bitbucket.globehacks.views.fragments;
 
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -45,6 +46,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Emmanuel Victor Garcia on 19/07/2017.
@@ -53,6 +55,13 @@ import butterknife.OnClick;
 public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
+
+    private static final int WILL_START_RENDERING_MAP = 11;
+    private static final int DID_FINISH_RENDERING_MAP = 12;
+
+    private static final int DID_FINISH_LOADING_MAP = 6;
+
+    private SweetAlertDialog loadingDialog;
 
     @BindView(R.id.view_home) View homeView;
     @BindView(R.id.map_view) MapView mapView;
@@ -109,6 +118,19 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
             mapboxMap.setCameraPosition(cameraPosition);
         });
 
+        mapView.addOnMapChangedListener(change -> {
+            switch (change){
+                case WILL_START_RENDERING_MAP:
+                    showProgressDialog();
+                    break;
+                case DID_FINISH_LOADING_MAP:
+                    hideProgressDialog();
+                    break;
+                case DID_FINISH_RENDERING_MAP:
+                    hideProgressDialog();
+                    break;
+            }
+        });
         navigation = new MapboxNavigation(getContext(), Mapbox.getAccessToken());
 
         // Configure geolocation
@@ -237,7 +259,10 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         switch (v.getId()) {
             case R.id.fab_action:
                 if (!pinStore) showStoreForm();
-                else presenter.putStore();
+                else{
+                    presenter.putStore();
+                    showProgressDialog();
+                }
                 break;
             case R.id.fab_cancel:
                 resetStoreForm();
@@ -327,12 +352,26 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public void onAddedStoreSuccess() {
+        hideProgressDialog();
         mapboxMap.clear();
         resetStoreForm();
     }
 
     @Override
     public void onAddedStoreFailure() {
+        hideProgressDialog();
 
+    }
+
+    private void showProgressDialog(){
+        loadingDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+        loadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        loadingDialog.setTitleText("Loading");
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+    }
+
+    private void hideProgressDialog(){
+        loadingDialog.dismiss();
     }
 }
