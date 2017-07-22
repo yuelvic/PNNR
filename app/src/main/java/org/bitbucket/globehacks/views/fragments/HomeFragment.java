@@ -45,8 +45,8 @@ import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
-import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.GeoPoint;
+import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.User;
 import org.bitbucket.globehacks.presenters.HomePresenter;
 import org.bitbucket.globehacks.services.ApiService;
@@ -85,6 +85,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
 
     private static final String TAG = HomeFragment.class.getSimpleName();
+
+
 
     private static final int WILL_START_RENDERING_MAP = 11;
     private static final int DID_FINISH_RENDERING_MAP = 12;
@@ -142,6 +144,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         ((GlobeHack) getActivity().getApplication()).getEntityComponent().inject(this);
         presenter.init();
 
+
         latLngList = new ArrayList<>();
 
         fabStore.setOnClickListener(this);
@@ -190,6 +193,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         navigation.addAlertLevelChangeListener(this);
         navigation.addProgressChangeListener(this);
     }
+
 
     @Override
     public void onResume() {
@@ -313,6 +317,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @OnClick(R.id.tv_store_route)
     public void navigateToStore() {
         if (mapboxMap == null || mapboxMap.getMyLocation() == null) return;
+
+
         showProgressDialog();
 
         Position origin = Position.fromCoordinates(mapboxMap.getMyLocation().getLongitude(),
@@ -320,14 +326,17 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         Position destination = Position.fromCoordinates(store.getLongitude(), store.getLatitude());
         Log.d(TAG, Double.toString(store.getLatitude()) + " " + Double.toString(store.getLongitude()));
 
+
         navigation.getRoute(origin, destination, new Callback<DirectionsResponse>() {
             @Override
             public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
                 Log.d(TAG, Integer.toString(response.code()) + " " + response.message());
                 hideProgressDialog();
 
+
                 if (response.body().getRoutes() != null) {
                     List<DirectionsRoute> directionsRoutes = response.body().getRoutes();
+
 
                     for (int i = 0; i < directionsRoutes.size(); i++) {
                         DirectionsRoute directionsRoute = directionsRoutes.get(i);
@@ -349,6 +358,9 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                                 .addAll(latLngList)
                                 .color(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark))
                                 .width(5));
+
+
+
                     }
                 }
             }
