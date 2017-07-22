@@ -27,6 +27,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.services.android.navigation.v5.MapboxNavigation;
 import com.mapbox.services.android.ui.geocoder.GeocoderAutoCompleteView;
+import com.mapbox.services.api.directions.v5.models.DirectionsResponse;
 import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
 import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.services.commons.models.Position;
@@ -52,13 +53,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Emmanuel Victor Garcia on 19/07/2017.
  */
 
 
-public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener, MapboxMap.OnCameraIdleListener,MapboxMap.OnMarkerClickListener {
+public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener, MapboxMap.OnCameraIdleListener,MapboxMap.OnMarkerClickListener {
 
 
     private static final String TAG = HomeFragment.class.getSimpleName();
@@ -119,7 +123,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
             this.mapboxMap = mapboxMap;
             this.mapboxMap.setOnMarkerClickListener(this);
             this.mapboxMap.setOnMapLongClickListener(this);
-            this.mapboxMap.setOnMyLocationChangeListener(this);
             this.mapboxMap.setOnCameraIdleListener(this);
             if (mapboxMap.getMyLocation() == null) return;
 
@@ -129,8 +132,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                     .build();
 
             mapboxMap.setCameraPosition(cameraPosition);
-
-
         });
 
         mapView.addOnMapChangedListener(change -> {
@@ -247,6 +248,25 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         mapboxMap.clear();
     }
 
+    private void navigateToStore(LatLng latLng) {
+        if (mapboxMap == null || mapboxMap.getMyLocation() == null) return;
+        Position origin = Position.fromLngLat(mapboxMap.getMyLocation().getLatitude(),
+                mapboxMap.getMyLocation().getLongitude());
+        Position destination = Position.fromLngLat(latLng.getLatitude(), latLng.getLongitude());
+
+        navigation.getRoute(origin, destination, new Callback<DirectionsResponse>() {
+            @Override
+            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                
+            }
+
+            @Override
+            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     @OnClick(R.id.btn_add_store_locate)
     public void pinStoreLocation() {
         if (etStoreName.getText().toString().equals(""))
@@ -304,13 +324,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onMyLocationChange(@Nullable Location location) {
-//        if (location == null) return;
-//        mapboxMap.setCameraPosition(new CameraPosition.Builder()
-//                .target(new LatLng(location)).build());
     }
 
     @Override
