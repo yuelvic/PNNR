@@ -59,4 +59,9 @@
         layout="@layout/layout_add_store"
         android:visibility="gone"/>
 
+
+    <include
+        android:id="@+id/view_store_info"
+        layout="@layout/layout_store_info"
+        android:visibility="gone"/>
 </RelativeLayout>

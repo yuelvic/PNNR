@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class Store {
 
     private String objectId;
+    private String contactNumber;
     private String name;
     private double latitude;
     private double longitude;
@@ -71,5 +72,13 @@ public class Store {
 
     public void setOperationTime(String operationTime) {
         this.operationTime = operationTime;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 }
