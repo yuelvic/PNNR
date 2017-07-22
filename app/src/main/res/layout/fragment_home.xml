@@ -33,13 +33,26 @@
         android:id="@+id/fab_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/nav_view"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/margin_padding_size_large"
+        android:layout_marginBottom="@dimen/margin_padding_size_medium"
         android:layout_marginEnd="@dimen/margin_padding_size_medium"
         android:elevation="@dimen/margin_padding_size_small"
         android:src="@drawable/ic_add" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_padding_size_medium"
+        android:layout_marginEnd="@dimen/margin_padding_size_small"
+        android:layout_toStartOf="@id/fab_action"
+        android:elevation="@dimen/margin_padding_size_medium"
+        android:rotation="45"
+        android:src="@drawable/ic_add"
+        android:visibility="gone"
+        app:backgroundTint="@android:color/holo_red_light"/>
 
     <include
         android:id="@+id/view_add_store"

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.mapbox.mapboxsdk.Mapbox;
@@ -25,12 +26,14 @@ import com.mapbox.services.android.ui.geocoder.GeocoderAutoCompleteView;
 import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
 import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.services.commons.models.Position;
+import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.models.User;
 import org.bitbucket.globehacks.presenters.HomePresenter;
 import org.bitbucket.globehacks.services.ApiService;
+import org.bitbucket.globehacks.utils.Keys;
 import org.bitbucket.globehacks.utils.Utilities;
 import org.bitbucket.globehacks.views.interfaces.HomeView;
 
@@ -42,7 +45,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
  * Created by Emmanuel Victor Garcia on 19/07/2017.
@@ -56,14 +58,20 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @BindView(R.id.map_view) MapView mapView;
     @BindView(R.id.geo_view) GeocoderAutoCompleteView geoView;
     @BindView(R.id.fab_action) FloatingActionButton fabStore;
+    @BindView(R.id.fab_cancel) FloatingActionButton fabCancel;
 
     @BindView(R.id.view_add_store) View addStoreView;
+    @BindView(R.id.edt_store_name) EditText etStoreName;
 
     @Inject ApiService apiService;
 
+    // MapBox components
     private CameraPosition cameraPosition;
     private MapboxMap mapboxMap;
     private MapboxNavigation navigation;
+
+    // Flag components
+    private boolean pinStore = false;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -84,6 +92,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         presenter.init();
 
         fabStore.setOnClickListener(this);
+        fabCancel.setOnClickListener(this);
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(mapboxMap -> {
@@ -185,6 +194,26 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         addStoreView.animate().translationY(0).start();
     }
 
+    private void resetStoreForm() {
+        pinStore = false;
+        etStoreName.setText("");
+        fabStore.setImageResource(R.drawable.ic_add);
+        fabCancel.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.btn_add_store_locate)
+    public void pinStoreLocation() {
+        if (etStoreName.getText().toString().equals(""))
+            return;
+
+        Utilities.hideOnScreenKeyboard(this);
+        fabStore.setImageResource(R.drawable.ic_done);
+        fabCancel.setVisibility(View.VISIBLE);
+        pinStore = true;
+
+        hideStoreForm();
+    }
+
     @OnClick(R.id.btn_add_store_cancel)
     public void hideStoreForm() {
         geoView.setVisibility(View.VISIBLE);
@@ -198,7 +227,14 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_action:
-                showStoreForm();
+                if (!pinStore) showStoreForm();
+                else {
+//                    presenter.putStore();
+                    resetStoreForm();
+                }
+                break;
+            case R.id.fab_cancel:
+                resetStoreForm();
                 break;
         }
     }
@@ -250,7 +286,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public String getStoreName() {
-        return null;
+        return etStoreName.getText().toString();
     }
 
     @Override
@@ -275,12 +311,12 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public String getStoreOwner() {
-        return null;
+        return getProfile().getObjectId();
     }
 
     @Override
     public User getProfile() {
-        return null;
+        return PreferencesManager.getObject(Keys.USER, User.class);
     }
 
     @Override

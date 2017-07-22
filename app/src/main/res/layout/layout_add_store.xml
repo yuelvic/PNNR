@@ -51,7 +51,7 @@
 
 
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_reg_location_select"
+            android:id="@+id/btn_add_store_locate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
