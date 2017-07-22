@@ -59,6 +59,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
         return homeFragment;
+
     }
 
     @Nullable
