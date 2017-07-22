@@ -287,8 +287,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-        presenter.getStore(marker.getPosition());
-        return true;
+        return false;
     }
 
     @Override
@@ -431,7 +430,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         for (GeoPoint geoPoint : geoPoints) {
             mapboxMap.addMarker(new MarkerOptions()
                     .position(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()))
-                    .title(""));
+                    .title(geoPoint.getMetadata().getName()));
         }
     }
 

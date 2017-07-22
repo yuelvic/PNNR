@@ -50,7 +50,7 @@ public interface ApiService {
                                @Header("user-token") String token, @Body Store store);
 
     @GET("{app_id}/{rest_key}/data/Store/")
-    Observable<List<Store>> getStore(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+    Observable<Store> getStore(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
                                @Header("user-token") String token, @Path("where") String objectId);
 
     @GET("{app_id}/{rest_key}/data/Store")
@@ -64,9 +64,9 @@ public interface ApiService {
 
     @GET("{app_id}/{rest_key}/geo/points")
     Observable<List<GeoPoint>> getGeoPoints(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
-                                            @Header("user-token") String token, @Query("nw-latitude") double nwLatitude,
-                                            @Query("nw-longitude") double nwLongitude, @Query("se-latitude") double seLatitude,
-                                            @Query("se-longitude") double seLongitude, @Query("radius") int radius, @Query("units") String unit,
-                                            @Query("pageSize") int pageSize, @Query("metaInResponse") boolean meta);
+                                            @Header("user-token") String token, @Query("nwlat") double nwLatitude,
+                                            @Query("nwlon") double nwLongitude, @Query("selat") double seLatitude,
+                                            @Query("selon") double seLongitude, @Query("pagesize") int pageSize,
+                                            @Query("includemetadata") boolean meta);
 
 }
