@@ -60,6 +60,7 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
         store.setOperationTime(mView.getStoreOperationTime());
         store.setOwner(mView.getStoreOwner());
 
+
         return store;
     }
 
