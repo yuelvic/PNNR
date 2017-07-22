@@ -48,6 +48,7 @@
             android:inputType="text"
             android:focusable="true"
             android:maxLines="1"
+            android:textSize="@dimen/text_size_medium"
             android:textColor="@color/colorBlack"
             android:textColorHint="@color/colorGrayDark" />
 
@@ -63,6 +64,7 @@
             fancy:fb_textFont="fonts/font_light.ttf"
             fancy:fb_radius="5dp"
             fancy:fb_text="Drop Pin"
+            fancy:fb_textSize="@dimen/text_size_medium"
             fancy:fb_textColor="@color/colorWhite" />
 
         <mehdi.sakout.fancybuttons.FancyButton
@@ -72,6 +74,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             fancy:fb_defaultColor="@color/colorGray"
+            fancy:fb_textSize="@dimen/text_size_medium"
             fancy:fb_focusColor="@color/colorGrayDark"
             fancy:fb_radius="5dp"
             fancy:fb_textFont="fonts/font_light.ttf"

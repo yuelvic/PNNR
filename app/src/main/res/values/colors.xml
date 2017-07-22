@@ -16,6 +16,6 @@
     <color name="colorFacebookPrimary">#3b5998</color>
     <color name="colorFacebookPrimaryDark">#243f78</color>
 
-    <color name="colorGooglePrimary">#e53935</color>
-    <color name="colorGooglePrimaryDark">#9f231a</color>
+    <color name="colorRed">#e74c3c</color>
+    <color name="colorRedDark">#c0392b</color>
 </resources>
