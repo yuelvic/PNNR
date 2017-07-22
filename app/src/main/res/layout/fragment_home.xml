@@ -25,6 +25,7 @@
         android:elevation="@dimen/margin_padding_size_small"
         android:textSize="@dimen/text_size_micro"
         android:hint="@string/text_hint_geo"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:maxLength="40"/>
 
 </RelativeLayout>
