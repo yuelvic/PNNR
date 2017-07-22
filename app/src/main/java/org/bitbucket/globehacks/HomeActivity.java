@@ -1,5 +1,6 @@
 package org.bitbucket.globehacks;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import org.bitbucket.globehacks.views.fragments.ProfileFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Emmanuel Victor Garcia on 7/21/17.
@@ -42,6 +44,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         navigationView.setOnNavigationItemSelectedListener(this);
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

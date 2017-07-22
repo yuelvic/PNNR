@@ -6,9 +6,15 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_profile"
+        android:scaleType="centerCrop"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/margin_padding_size_large"
         android:orientation="vertical">
 
 
@@ -30,12 +36,6 @@
             android:layout_marginTop="-30dp"
             android:orientation="vertical"
             android:paddingTop="@dimen/margin_padding_size_xlarge">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
 
                 <TextView
@@ -65,69 +65,66 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/text_size_medium"/>
 
-                <mehdi.sakout.fancybuttons.FancyButton
-                    android:id="@+id/btn_profile_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="@dimen/margin_padding_size_small"
-                    android:layout_marginRight="@dimen/margin_padding_size_small"
-                    android:layout_marginTop="@dimen/margin_padding_size_medium"
-                    android:padding="@dimen/margin_padding_size_medium"
-                    fancy:fb_defaultColor="@color/colorAccent"
-                    fancy:fb_focusColor="@color/colorAccentDark"
-                    fancy:fb_radius="20dp"
-                    fancy:fb_text="Edit Profile"
-                    fancy:fb_textColor="@color/colorWhite"/>
-
-            </LinearLayout>
         </LinearLayout>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/btn_profile_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            fancy:fb_defaultColor="@color/colorAccent"
+            fancy:fb_focusColor="@color/colorAccentDark"
+            fancy:fb_radius="5dp"
+            fancy:fb_textColor="@color/colorWhite"
+            fancy:fb_textFont="fonts/font_light.ttf"
+            fancy:fb_text="Edit Profile"
+            fancy:fb_textSize="@dimen/text_size_medium" />
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/btn_profile_preferences"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/margin_padding_size_small"
-            android:layout_marginRight="@dimen/margin_padding_size_small"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:padding="@dimen/margin_padding_size_medium"
-            fancy:fb_defaultColor="@color/colorPrimaryDark"
-            fancy:fb_focusColor="@color/colorPrimary"
-            fancy:fb_radius="20dp"
-            fancy:fb_text="Edit Map Preferences"
-            fancy:fb_textColor="@color/colorWhite"/>
+            android:layout_marginTop="10dp"
+            fancy:fb_defaultColor="@color/colorAccent"
+            fancy:fb_focusColor="@color/colorAccentDark"
+            fancy:fb_radius="5dp"
+            fancy:fb_textColor="@color/colorWhite"
+            fancy:fb_textFont="fonts/font_light.ttf"
+            fancy:fb_text="Edit Preferences"
+            fancy:fb_textSize="@dimen/text_size_medium" />
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/btn_profile_change_password"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/margin_padding_size_small"
-            android:layout_marginRight="@dimen/margin_padding_size_small"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:padding="@dimen/margin_padding_size_medium"
-            fancy:fb_defaultColor="@color/colorPrimaryDark"
-            fancy:fb_focusColor="@color/colorPrimary"
-            fancy:fb_radius="20dp"
+            android:layout_marginTop="10dp"
+            fancy:fb_defaultColor="@color/colorAccent"
+            fancy:fb_focusColor="@color/colorAccentDark"
+            fancy:fb_radius="5dp"
+            fancy:fb_textColor="@color/colorWhite"
+            fancy:fb_textFont="fonts/font_light.ttf"
             fancy:fb_text="Change Password"
-            fancy:fb_textColor="@color/colorWhite"/>
+            fancy:fb_textSize="@dimen/text_size_medium" />
 
-        <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_profile_logout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/margin_padding_size_small"
-            android:layout_marginRight="@dimen/margin_padding_size_small"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:padding="@dimen/margin_padding_size_medium"
-            fancy:fb_defaultColor="@color/colorPrimaryDark"
-            fancy:fb_focusColor="@color/colorPrimary"
-            fancy:fb_radius="20dp"
-            fancy:fb_text="Logout"
-            fancy:fb_textColor="@color/colorWhite"/>
     </LinearLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btn_profile_logout"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/margin_padding_size_large"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        fancy:fb_defaultColor="@color/colorRed"
+        fancy:fb_focusColor="@color/colorRedDark"
+        fancy:fb_radius="5dp"
+        fancy:fb_textColor="@color/colorWhite"
+        fancy:fb_textFont="fonts/font_light.ttf"
+        fancy:fb_text="Logout"
+        fancy:fb_textSize="@dimen/text_size_medium" />
 
     <ImageButton
         android:id="@+id/ib_back"
