@@ -53,7 +53,7 @@ public interface ApiService {
                                @Header("user-token") String token, @Path("object_id") String objectId);
 
     @GET("{app_id}/{rest_key}/data/Store")
-    Observable<Store> getStores(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+    Observable<List<Store>> getStores(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
                                 @Header("user-token") String token, @Query("where") String query);
 
     @Headers("Content-Type:application/json")
