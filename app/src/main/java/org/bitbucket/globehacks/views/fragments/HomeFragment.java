@@ -406,7 +406,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         for (GeoPoint geoPoint : geoPoints) {
             mapboxMap.addMarker(new MarkerOptions()
                     .position(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()))
-                    .title("Pin"));
+                    .title(""));
         }
     }
 

@@ -109,7 +109,7 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                 .getGeoPoints(mView.getApplicationId(), mView.getRestKey(),
                         mView.getProfile().getToken(), mView.getMapNWLatitude(),
                         mView.getMapNWLongitude(), mView.getMapSELatitude(),
-                        mView.getMapSELongitude(), 10, "KILOMETERS", 10, false)
+                        mView.getMapSELongitude(), 10, "KILOMETERS", 10, true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
