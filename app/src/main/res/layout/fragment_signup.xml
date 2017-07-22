@@ -114,6 +114,7 @@
                     android:id="@+id/spn_usertype"
                     android:layout_width="match_parent"
                     android:minHeight="50dp"
+                    android:entries="@array/user_type"
                     android:backgroundTint="@color/colorAccent"
                     android:layout_height="wrap_content">
                 </Spinner>
