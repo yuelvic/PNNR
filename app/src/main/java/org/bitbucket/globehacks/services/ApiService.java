@@ -1,7 +1,10 @@
 package org.bitbucket.globehacks.services;
 
+import org.bitbucket.globehacks.models.GeoPoint;
 import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.User;
+
+import java.util.List;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -46,5 +49,17 @@ public interface ApiService {
     @GET("{app_id}/{rest_key}/data/Store")
     Observable<Store> getStores(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
                                 @Header("user-token") String token, @Query("where") String query);
+
+    @Headers("Content-Type:application/json")
+    @POST("{app_id}/{rest_key}/geo/points")
+    Observable<GeoPoint> putGeoPoint(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+                                     @Header("user-token") String token, @Body GeoPoint geoPoint);
+
+    @GET("{app_id}/{rest_key}/geo/points")
+    Observable<List<GeoPoint>> getGeoPoints(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+                                            @Header("user-token") String token, @Query("latitude") double latitude,
+                                            @Query("longitude") double longitude, @Query("radius") int radius,
+                                            @Query("units") String unit, @Query("pageSize") int pageSize,
+                                            @Query("metaInResponse") boolean meta);
 
 }
