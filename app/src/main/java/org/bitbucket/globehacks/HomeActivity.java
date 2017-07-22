@@ -24,9 +24,6 @@ import butterknife.OnClick;
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.nav_view) BottomNavigationView navigationView;
-    @BindView(R.id.fab_action) FloatingActionButton floatingActionButton;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,26 +49,17 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         switch (item.getItemId()) {
             case R.id.action_home:
-                configureAddingForm(View.VISIBLE);
                 fragmentTransaction.replace(R.id.content_home,
                         HomeFragment.newInstance(), HomeFragment.class.getSimpleName())
                 .commit();
                 return true;
             case R.id.action_profile:
-                configureAddingForm(View.INVISIBLE);
                 fragmentTransaction.replace(R.id.content_home,
                         ProfileFragment.newInstance(), ProfileFragment.class.getSimpleName())
                 .commit();
-
-
                 return true;
         }
         return false;
     }
 
-
-
-    private void configureAddingForm(int status){
-        floatingActionButton.setVisibility(status);
-    }
 }

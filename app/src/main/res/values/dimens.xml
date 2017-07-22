@@ -15,6 +15,8 @@
     <dimen name="margin_padding_size_medium">16dp</dimen>
     <dimen name="margin_padding_size_large">24dp</dimen>
     <dimen name="margin_padding_size_xlarge">32dp</dimen>
+    <dimen name="margin_padding_size_xxlarge">48dp</dimen>
+    <dimen name="margin_padding_size_xxxlarge">64dp</dimen>
 
     <!-- Launcher Icon Size, https://developer.android.com/guide/practices/ui_guidelines/icon_design_launcher.html#size -->
     <dimen name="launcher_icon_size">@dimen/standard_touch_size</dimen>
