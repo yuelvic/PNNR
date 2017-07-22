@@ -72,6 +72,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     // Flag components
     private boolean pinStore = false;
+    private LatLng pinLatLng;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -173,8 +174,10 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
      */
     private void updateMap(double latitude, double longitude) {
         mapboxMap.clear();
+
+        LatLng latLng = new LatLng(latitude, longitude);
         mapboxMap.addMarker(new MarkerOptions()
-                .position(new LatLng(latitude, longitude))
+                .position(latLng)
                 .title(geoView.getText().toString()));
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -182,9 +185,13 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                 .zoom(15)
                 .build();
         mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 5000, null);
+
+        if (pinStore) this.pinLatLng = latLng;
     }
 
     private void showStoreForm() {
+        mapboxMap.clear();
+
         geoView.setVisibility(View.GONE);
         fabStore.setVisibility(View.GONE);
 
@@ -199,6 +206,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         etStoreName.setText("");
         fabStore.setImageResource(R.drawable.ic_add);
         fabCancel.setVisibility(View.GONE);
+
+        mapboxMap.clear();
     }
 
     @OnClick(R.id.btn_add_store_locate)
@@ -228,10 +237,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         switch (v.getId()) {
             case R.id.fab_action:
                 if (!pinStore) showStoreForm();
-                else {
-//                    presenter.putStore();
-                    resetStoreForm();
-                }
+                else presenter.putStore();
                 break;
             case R.id.fab_cancel:
                 resetStoreForm();
@@ -241,7 +247,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public void onMapLongClick(@NonNull LatLng point) {
-        Log.d("Latlng", point.toString());
+        this.pinLatLng = point;
 
         mapboxMap.clear();
         mapboxMap.addMarker(new MarkerOptions().position(point).title("Dropped pin"));
@@ -291,17 +297,17 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public double getStoreLatitude() {
-        return 0;
+        return pinLatLng.getLatitude();
     }
 
     @Override
     public double getStoreLongitude() {
-        return 0;
+        return pinLatLng.getLongitude();
     }
 
     @Override
     public boolean getStoreAvailability() {
-        return false;
+        return true;
     }
 
     @Override
@@ -321,7 +327,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public void onAddedStoreSuccess() {
-
+        mapboxMap.clear();
+        resetStoreForm();
     }
 
     @Override
