@@ -1,6 +1,7 @@
 package org.bitbucket.globehacks.presenters;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import org.bitbucket.globehacks.models.GeoPoint;
 import org.bitbucket.globehacks.models.Store;
@@ -103,7 +104,7 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                 );
     }
 
-    public void getStore(String objectId) {
+    public void getStore(LatLng latLng) {
         checkStoreSubscription();
         storeSubscription = mView.getApiService()
                 .getStore(mView.getApplicationId(), mView.getRestKey(),mView.getProfile().getToken(),objectId)

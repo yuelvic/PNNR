@@ -37,7 +37,8 @@ public interface ApiService {
     @Headers("Content-Type:application/json")
     @PUT("{app_id}/{rest_key}/users/{object_id}")
     Observable<User> updateUser(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
-                                @Path("token") String token, @Body User user);
+                                @Path("object_id") String objectId, @Path("token") String token,
+                                @Body User user);
 
     @GET("{app_id}/{rest_key}/users/logout")
     Observable<Boolean> logout(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
@@ -48,9 +49,9 @@ public interface ApiService {
     Observable<Store> putStore(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
                                @Header("user-token") String token, @Body Store store);
 
-    @GET("{app_id}/{rest_key}/data/Store/{object_id}")
-    Observable<Store> getStore(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
-                               @Header("user-token") String token, @Path("object_id") String objectId);
+    @GET("{app_id}/{rest_key}/data/Store/")
+    Observable<List<Store>> getStore(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+                               @Header("user-token") String token, @Path("where") String objectId);
 
     @GET("{app_id}/{rest_key}/data/Store")
     Observable<List<Store>> getStores(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
