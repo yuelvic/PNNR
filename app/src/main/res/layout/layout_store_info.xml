@@ -116,9 +116,10 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_store_route"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ROUTE TO THE STORE"
+            android:text="ROUTE TO"
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_size_medium" />

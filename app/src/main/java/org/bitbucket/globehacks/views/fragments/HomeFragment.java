@@ -1,21 +1,17 @@
 package org.bitbucket.globehacks.views.fragments;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.mapbox.mapboxsdk.Mapbox;
@@ -36,7 +32,6 @@ import com.mapbox.services.commons.models.Position;
 import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.GlobeHack;
-import org.bitbucket.globehacks.HomeActivity;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.GeoPoint;
@@ -87,11 +82,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @BindView(R.id.edt_store_name) EditText etStoreName;
 
     @BindView(R.id.view_store_info) View storeInfo;
-    @BindView(R.id.tv_fullname)
-    TextView tvFullname;
-    @BindView(R.id.tv_number)
-    TextView tvNumber;
-
+    @BindView(R.id.tv_fullname) TextView tvFullname;
+    @BindView(R.id.tv_number) TextView tvNumber;
 
     @Inject ApiService apiService;
 
@@ -106,6 +98,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     // Marker components
     private LatLngBounds latLngBounds;
+    private Store store;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -258,25 +251,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         mapboxMap.clear();
     }
 
-    private void navigateToStore(LatLng latLng) {
-        if (mapboxMap == null || mapboxMap.getMyLocation() == null) return;
-        Position origin = Position.fromLngLat(mapboxMap.getMyLocation().getLatitude(),
-                mapboxMap.getMyLocation().getLongitude());
-        Position destination = Position.fromLngLat(latLng.getLatitude(), latLng.getLongitude());
-
-        navigation.getRoute(origin, destination, new Callback<DirectionsResponse>() {
-            @Override
-            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
-                
-            }
-
-            @Override
-            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
     @OnClick(R.id.btn_add_store_locate)
     public void pinStoreLocation() {
         if (etStoreName.getText().toString().equals(""))
@@ -299,9 +273,30 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         addStoreView.animate().translationY(homeView.getHeight()).start();
     }
 
+    @OnClick(R.id.tv_store_route)
+    public void navigateToStore() {
+        if (mapboxMap == null || mapboxMap.getMyLocation() == null) return;
+        Position origin = Position.fromLngLat(mapboxMap.getMyLocation().getLatitude(),
+                mapboxMap.getMyLocation().getLongitude());
+        Position destination = Position.fromLngLat(store.getLatitude(), store.getLongitude());
+
+        navigation.getRoute(origin, destination, new Callback<DirectionsResponse>() {
+            @Override
+            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+
+            }
+        });
+
+        hideStoreInfo();
+    }
 
     // Store Info
-    private void showStoryInfo() {
+    private void showStoreInfo() {
         mapboxMap.clear();
 
         geoView.setVisibility(View.GONE);
@@ -312,30 +307,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         storeInfo.clearAnimation();
         storeInfo.animate().translationY(0).start();
     }
-//
-//    private void resetStoreForm() {
-//        pinStore = false;
-//        etStoreName.setText("");
-//        fabStore.setImageResource(R.drawable.ic_add);
-//        fabCancel.setVisibility(View.GONE);
-//
-//        mapboxMap.clear();
-//    }
-//
-//    @OnClick(R.id.btn_add_store_locate)
-//    public void pinStoreLocation() {
-//        if (etStoreName.getText().toString().equals(""))
-//            return;
-//
-//        Utilities.hideOnScreenKeyboard(this);
-//        fabStore.setImageResource(R.drawable.ic_done);
-//        fabCancel.setVisibility(View.VISIBLE);
-//        pinStore = true;
-//
-//        hideStoreForm();
-//    }
-//
-
 
     @OnClick(R.id.btn_store_close)
     public void hideStoreInfo(){
@@ -345,7 +316,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         storeInfo.clearAnimation();
         storeInfo.animate().translationY(homeView.getHeight()).start();
     }
-
 
     @Override
     public void onClick(View v) {
@@ -367,7 +337,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     public boolean onMarkerClick(@NonNull Marker marker) {
         showProgressDialog();
         presenter.getStore(marker.getTitle());
-        showStoryInfo();
+        showStoreInfo();
         return true;
     }
 
@@ -478,6 +448,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public void onGetStoreSuccess(Store store) {
+        this.store = store;
+
         hideProgressDialog();
         tvFullname.setText(store.getName());
         tvNumber.setText("");
