@@ -1,6 +1,7 @@
 package org.bitbucket.globehacks.views.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by elthos on 7/22/17.
@@ -47,6 +49,8 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
 
     @Inject ApiService apiService;
     @Inject Form form;
+
+    private SweetAlertDialog loadingDialog;
 
     public static EditProfileFragment newInstance() {
         return new EditProfileFragment();
@@ -84,6 +88,8 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
     @OnClick(R.id.btn_update_profile)
     public void onClickedUpdate() {
        if (form.validate()) {
+           showProgressDialog();
+
            presenter.passInputs(edtFirstname.getText().toString(), edtLastname.getText().toString(), edtEmail.getText().toString(),
                    edtContactNumber.getText().toString());
        }
@@ -118,6 +124,8 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
 
     @Override
     public void onSuccess() {
+        hideProgressDialog();
+
         Toast.makeText(getContext(), "Profile successfully changed", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         intent.putExtra("type", 1);
@@ -126,6 +134,20 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
 
     @Override
     public void onFailure() {
+        hideProgressDialog();
+
         Toast.makeText(getContext(), "Changing unsuccessful", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showProgressDialog(){
+        loadingDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+        loadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        loadingDialog.setTitleText("Loading. Please wait...");
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+    }
+
+    private void hideProgressDialog(){
+        loadingDialog.dismiss();
     }
 }

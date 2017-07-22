@@ -1,16 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/profile_frame"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimary">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:fancy="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_store" />
+        android:src="@drawable/bg_store"/>
 
     <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/btn_store_close"
@@ -18,14 +18,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/margin_padding_size_small"
         fancy:fb_defaultColor="@color/colorRed"
         fancy:fb_focusColor="@color/colorRedDark"
         fancy:fb_radius="5dp"
-        android:layout_margin="@dimen/margin_padding_size_small"
         fancy:fb_text="CLOSE"
         fancy:fb_textColor="@color/colorWhite"
         fancy:fb_textFont="fonts/font_light.ttf"
-        fancy:fb_textSize="@dimen/text_size_medium" />
+        fancy:fb_textSize="@dimen/text_size_medium"/>
 
     <LinearLayout
         android:id="@+id/lv_main"
@@ -42,7 +42,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
             android:scaleType="centerCrop"
+<<<<<<< HEAD
             android:src="@drawable/img_store" />
+=======
+            android:src="@drawable/img_profile"/>
+>>>>>>> f52226030ac58bd96e402c990fa0a58f1954306f
 
 
         <LinearLayout
@@ -62,7 +66,7 @@
                 android:text="Emman Garcia"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_large"/>
 
             <TextView
                 android:id="@+id/tv_number"
@@ -71,7 +75,7 @@
                 android:text="09167237988"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_medium" />
+                android:textSize="@dimen/text_size_medium"/>
 
             <TextView
                 android:id="@+id/tv_user_type"
@@ -80,7 +84,7 @@
                 android:text="Store Owner"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_medium" />
+                android:textSize="@dimen/text_size_medium"/>
 
         </LinearLayout>
 
@@ -95,14 +99,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
+                android:layout_weight="0.5"
                 fancy:fb_defaultColor="@color/colorAccent"
                 fancy:fb_focusColor="@color/colorAccentDark"
                 fancy:fb_radius="5dp"
                 fancy:fb_text="Notify store"
-                android:layout_weight="0.5"
                 fancy:fb_textColor="@color/colorWhite"
                 fancy:fb_textFont="fonts/font_light.ttf"
-                fancy:fb_textSize="@dimen/text_size_medium" />
+                fancy:fb_textSize="@dimen/text_size_medium"/>
 
 
         </LinearLayout>
@@ -110,19 +114,24 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_below="@id/lv_main"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@id/lv_main"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_store_route"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:text="ROUTE TO STORE"
+=======
+            android:padding="@dimen/margin_padding_size_small"
+            android:text="ROUTE TO"
+>>>>>>> f52226030ac58bd96e402c990fa0a58f1954306f
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/text_size_medium" />
+            android:textSize="@dimen/text_size_medium"/>
 
     </LinearLayout>
 

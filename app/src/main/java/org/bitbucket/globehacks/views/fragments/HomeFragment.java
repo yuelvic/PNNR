@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.mapbox.mapboxsdk.Mapbox;
@@ -73,6 +74,7 @@ import static com.mapbox.services.android.navigation.v5.NavigationConstants.DEPA
 import static com.mapbox.services.android.navigation.v5.NavigationConstants.HIGH_ALERT_LEVEL;
 import static com.mapbox.services.android.navigation.v5.NavigationConstants.LOW_ALERT_LEVEL;
 import static com.mapbox.services.android.navigation.v5.NavigationConstants.MEDIUM_ALERT_LEVEL;
+import static com.mapbox.services.android.navigation.v5.NavigationConstants.NONE_ALERT_LEVEL;
 
 /**
  * Created by Emmanuel Victor Garcia on 19/07/2017.
@@ -414,7 +416,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-        showProgressDialog();
+//        showProgressDialog();
         presenter.getStore(marker.getTitle());
         showStoreInfo();
         return true;
@@ -498,8 +500,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         return getProfile().getObjectId();
     }
 
-
-
     @Override
     public double getMapNWLatitude() {
         return latLngBounds.getNorthWest().getLatitude();
@@ -539,7 +539,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     }
 
-
     @Override
     public void onAddedStoreSuccess() {
         hideProgressDialog();
@@ -550,12 +549,13 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @Override
     public void onAddedStoreFailure() {
         hideProgressDialog();
-
     }
 
     @Override
     public void onGeoPointLoadSuccess(List<GeoPoint> geoPoints) {
-//        mapboxMap.clear();
+        // causing polyline to remove while moving the camera
+        // mapboxMap.clear();
+
         for (GeoPoint geoPoint : geoPoints) {
             mapboxMap.addMarker(new MarkerOptions()
                     .position(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()))
@@ -572,7 +572,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     private void showProgressDialog(){
         loadingDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
         loadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        loadingDialog.setTitleText("Loading");
+        loadingDialog.setTitleText("Loading. Please wait...");
         loadingDialog.setCancelable(false);
         loadingDialog.show();
     }
@@ -585,23 +585,33 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     public void onAlertLevelChange(int alertLevel, RouteProgress routeProgress) {
         switch (alertLevel) {
             case DEPART_ALERT_LEVEL:
+                Toast.makeText(getContext(), "Navigation Started", Toast.LENGTH_SHORT).show();
                 break;
             case LOW_ALERT_LEVEL:
+                Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
+                        Toast.LENGTH_SHORT).show();
                 break;
             case MEDIUM_ALERT_LEVEL:
+                Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
+                        Toast.LENGTH_SHORT).show();
                 break;
             case HIGH_ALERT_LEVEL:
+                Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
+                        Toast.LENGTH_SHORT).show();
                 break;
             case ARRIVE_ALERT_LEVEL:
+                Toast.makeText(getContext(), "You've arrived on your destination", Toast.LENGTH_SHORT).show();
                 break;
-            default:
+            case NONE_ALERT_LEVEL:
+                Toast.makeText(getContext(), "Navigation Started", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
-
     @Override
     public void onProgressChange(Location location, RouteProgress routeProgress) {
-        Log.d(TAG, Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100) / 100) + " km");
+        Log.d(TAG, Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km");
+        Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
+                Toast.LENGTH_SHORT).show();
     }
 }
