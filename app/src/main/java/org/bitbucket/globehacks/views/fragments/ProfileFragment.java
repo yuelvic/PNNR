@@ -65,7 +65,7 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
 //        civProfileImage.setImageResource();
         tvFullName.setText(getUser().getFirstname() + " " + getUser().getLastname());
         tvNumber.setText(getUser().getMobile());
-        tvUserType.setText(getUser().getToken());
+        tvUserType.setText(getUser().getType());
     }
 
     @OnClick(R.id.btn_profile_edit)
