@@ -47,8 +47,6 @@ public class GlobeHack extends Application {
         );
     }
 
-
-
     public NetworkComponent getEntityComponent() {
         return entityComponent;
     }
