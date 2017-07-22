@@ -1,0 +1,24 @@
+1:00PM - 2:00PM
+    Emman
+        - Adding of stores
+    Joshua
+        - Store form
+	- Profile page UI
+    Eltos
+        - Profile page client-server
+
+2:00PM - 3:00PM
+    Emman
+	- App settings
+    Joshua
+	- Form validations, loader and error handling
+    Eltos
+	- Place store markers
+
+3:00PM - 4:00PM
+    Emman
+	- Store details client-server
+    Joshua
+	- Store details UI
+    Eltos
+	- Navigate to store

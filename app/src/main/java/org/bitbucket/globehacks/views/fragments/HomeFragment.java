@@ -1,5 +1,6 @@
 package org.bitbucket.globehacks.views.fragments;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
  * Created by Emmanuel Victor Garcia on 19/07/2017.
  */
 
-public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener {
+public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
 
@@ -60,6 +61,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         mapView.getMapAsync(mapboxMap -> {
             this.mapboxMap = mapboxMap;
             this.mapboxMap.setOnMapLongClickListener(this);
+            this.mapboxMap.setOnMyLocationChangeListener(this);
             if (mapboxMap.getMyLocation() == null) return;
 
             cameraPosition = new CameraPosition.Builder()
@@ -69,6 +71,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
             mapboxMap.setCameraPosition(cameraPosition);
         });
 
+        // Configure geolocation
         geoView.setAccessToken(Mapbox.getAccessToken());
         geoView.setType(GeocodingCriteria.TYPE_POI);
     }
@@ -128,5 +131,12 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
         mapboxMap.clear();
         mapboxMap.addMarker(new MarkerOptions().position(point).title("Dropped pin"));
+    }
+
+    @Override
+    public void onMyLocationChange(@Nullable Location location) {
+        if (location == null) return;
+        mapboxMap.setCameraPosition(new CameraPosition.Builder()
+                .target(new LatLng(location)).build());
     }
 }
