@@ -1,5 +1,7 @@
 package org.bitbucket.globehacks.presenters;
 
+import android.util.Log;
+
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import org.bitbucket.globehacks.models.GeoPoint;
@@ -16,7 +18,7 @@ import rx.schedulers.Schedulers;
 
 public class HomePresenter extends MvpBasePresenter<HomeView> {
 
-    private static final String TAG = HomePresenter.class.getSimpleName();
+    private static final String TAG = HomePresenter.class.getName();
 
     private HomeView mView;
 
@@ -58,6 +60,7 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
         store.setOperationTime(mView.getStoreOperationTime());
         store.setOwner(mView.getStoreOwner());
 
+
         return store;
     }
 
@@ -86,6 +89,8 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
     }
 
     private void putGeoPoint(GeoPoint geoPoint) {
+        Log.d(TAG, mView.getProfile().getObjectId() + " " + mView.getProfile().getToken());
+
         checkPointSubscription();
         pointSubscription = mView.getApiService()
                 .putGeoPoint(mView.getApplicationId(), mView.getRestKey(),
@@ -103,15 +108,15 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                 );
     }
 
-    public void getStore(String objectId) {
+    public void getStore(Store store1) {
         checkStoreSubscription();
         storeSubscription = mView.getApiService()
-                .getStore(mView.getApplicationId(), mView.getRestKey(),mView.getProfile().getToken(),objectId)
+                .getStore(mView.getApplicationId(), mView.getRestKey(), mView.getProfile().getToken(), mView.getProfile().getObjectId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         store -> {
-                            mView.onGetStoreSuccess(store);
+                            mView.onGetStoreSuccess(store1);
                         },
                         throwable -> {
                             throwable.printStackTrace();

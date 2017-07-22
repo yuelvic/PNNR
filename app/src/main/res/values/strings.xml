@@ -15,4 +15,5 @@
         <item>Store Owner</item>
         <item>Customer</item>
     </string-array>
+    <string name="title_activity_user">UserActivity</string>
 </resources>

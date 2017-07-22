@@ -1,5 +1,6 @@
 package org.bitbucket.globehacks.views.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
@@ -34,6 +36,7 @@ import com.mapbox.services.commons.models.Position;
 import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.GlobeHack;
+import org.bitbucket.globehacks.HomeActivity;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.GeoPoint;
@@ -82,6 +85,13 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @BindView(R.id.view_add_store) View addStoreView;
     @BindView(R.id.edt_store_name) EditText etStoreName;
+
+    @BindView(R.id.view_store_info) View storeInfo;
+    @BindView(R.id.tv_fullname)
+    TextView tvFullname;
+    @BindView(R.id.tv_number)
+    TextView tvNumber;
+
 
     @Inject ApiService apiService;
 
@@ -289,6 +299,54 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         addStoreView.animate().translationY(homeView.getHeight()).start();
     }
 
+
+    // Store Info
+    private void showStoryInfo() {
+        mapboxMap.clear();
+
+        geoView.setVisibility(View.GONE);
+        fabStore.setVisibility(View.GONE);
+
+        storeInfo.setVisibility(View.VISIBLE);
+        storeInfo.setY(homeView.getHeight());
+        storeInfo.clearAnimation();
+        storeInfo.animate().translationY(0).start();
+    }
+//
+//    private void resetStoreForm() {
+//        pinStore = false;
+//        etStoreName.setText("");
+//        fabStore.setImageResource(R.drawable.ic_add);
+//        fabCancel.setVisibility(View.GONE);
+//
+//        mapboxMap.clear();
+//    }
+//
+//    @OnClick(R.id.btn_add_store_locate)
+//    public void pinStoreLocation() {
+//        if (etStoreName.getText().toString().equals(""))
+//            return;
+//
+//        Utilities.hideOnScreenKeyboard(this);
+//        fabStore.setImageResource(R.drawable.ic_done);
+//        fabCancel.setVisibility(View.VISIBLE);
+//        pinStore = true;
+//
+//        hideStoreForm();
+//    }
+//
+
+
+    @OnClick(R.id.btn_store_close)
+    public void hideStoreInfo(){
+        geoView.setVisibility(View.VISIBLE);
+        fabStore.setVisibility(View.VISIBLE);
+
+        storeInfo.clearAnimation();
+        storeInfo.animate().translationY(homeView.getHeight()).start();
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -307,7 +365,10 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-        return false;
+        showProgressDialog();
+        presenter.getStore(marker.getTitle());
+        showStoryInfo();
+        return true;
     }
 
     @Override
@@ -388,6 +449,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         return getProfile().getObjectId();
     }
 
+
+
     @Override
     public double getMapNWLatitude() {
         return latLngBounds.getNorthWest().getLatitude();
@@ -415,7 +478,9 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public void onGetStoreSuccess(Store store) {
-
+        hideProgressDialog();
+        tvFullname.setText(store.getName());
+        tvNumber.setText("");
     }
 
     @Override
@@ -443,7 +508,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         for (GeoPoint geoPoint : geoPoints) {
             mapboxMap.addMarker(new MarkerOptions()
                     .position(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()))
-                    .title(geoPoint.getMetadata().getName()));
+                    .title(geoPoint.getMetadata().getObjectId()));
+
         }
     }
 
