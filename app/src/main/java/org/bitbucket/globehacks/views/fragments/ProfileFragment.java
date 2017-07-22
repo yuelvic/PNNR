@@ -1,10 +1,12 @@
 package org.bitbucket.globehacks.views.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> implements ProfileView {
 
     private static final String TAG = ProfileFragment.class.getSimpleName();
+
     @BindView(R.id.civ_profile_image) CircleImageView civProfileImage;
     @BindView(R.id.tv_fullname) TextView tvFullName;
     @BindView(R.id.tv_number) TextView tvNumber;
@@ -71,6 +74,20 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
         tvFullName.setText(getUser().getFirstname() + " " + getUser().getLastname());
         tvNumber.setText(getUser().getMobile());
         tvUserType.setText(getUser().getType());
+    }
+
+    @OnClick(R.id.civ_profile_image)
+    public void changeProfilePicture() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Change profile picture")
+                .setMessage("Choose from..")
+                .setNeutralButton("Camera", (dialog, which) -> {
+
+                })
+                .setNeutralButton("Gallery", (dialog, which) -> {
+
+                })
+                .show();
     }
 
     @OnClick(R.id.btn_profile_edit)
