@@ -103,6 +103,23 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                 );
     }
 
+    public void getStore(String objectId) {
+        checkStoreSubscription();
+        storeSubscription = mView.getApiService()
+                .getStore(mView.getApplicationId(), mView.getRestKey(),mView.getProfile().getToken(),objectId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        store -> {
+                            mView.onGetStoreSuccess(store);
+                        },
+                        throwable -> {
+                            throwable.printStackTrace();
+                            mView.onGetStoreFailure();
+                        }
+                );
+    }
+
     public void getNearbyStores() {
         checkNearbySubscription();
         nearbySubscription = mView.getApiService()

@@ -13,9 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
@@ -32,6 +34,7 @@ import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
+import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.GeoPoint;
 import org.bitbucket.globehacks.models.User;
 import org.bitbucket.globehacks.presenters.HomePresenter;
@@ -54,7 +57,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Emmanuel Victor Garcia on 19/07/2017.
  */
 
-public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener, MapboxMap.OnCameraIdleListener {
+
+public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener, MapboxMap.OnCameraIdleListener,MapboxMap.OnMarkerClickListener {
+
 
     private static final String TAG = HomeFragment.class.getSimpleName();
 
@@ -112,6 +117,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(mapboxMap -> {
             this.mapboxMap = mapboxMap;
+            this.mapboxMap.setOnMarkerClickListener(this);
             this.mapboxMap.setOnMapLongClickListener(this);
             this.mapboxMap.setOnMyLocationChangeListener(this);
             this.mapboxMap.setOnCameraIdleListener(this);
@@ -123,6 +129,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                     .build();
 
             mapboxMap.setCameraPosition(cameraPosition);
+
+
         });
 
         mapView.addOnMapChangedListener(change -> {
@@ -278,6 +286,12 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     }
 
     @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+
+        return true;
+    }
+
+    @Override
     public void onMapLongClick(@NonNull LatLng point) {
         this.pinLatLng = point;
 
@@ -386,6 +400,17 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     public User getProfile() {
         return PreferencesManager.getObject(Keys.USER, User.class);
     }
+
+    @Override
+    public void onGetStoreSuccess(Store store) {
+
+    }
+
+    @Override
+    public void onGetStoreFailure() {
+
+    }
+
 
     @Override
     public void onAddedStoreSuccess() {

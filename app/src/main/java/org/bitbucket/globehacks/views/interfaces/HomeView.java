@@ -1,6 +1,10 @@
 package org.bitbucket.globehacks.views.interfaces;
 
 import org.bitbucket.globehacks.models.GeoPoint;
+
+import java.util.List;
+import org.bitbucket.globehacks.models.Store;
+import org.bitbucket.globehacks.models.GeoPoint;
 import org.bitbucket.globehacks.models.User;
 
 import java.util.List;
@@ -27,6 +31,9 @@ public interface HomeView extends BaseView {
 
     void onAddedStoreSuccess();
     void onAddedStoreFailure();
+
+    void onGetStoreSuccess(Store store);
+    void onGetStoreFailure();
 
     void onGeoPointLoadSuccess(List<GeoPoint> geoPoints);
     void onGeoPointLoadFailure();
