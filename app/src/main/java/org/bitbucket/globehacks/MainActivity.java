@@ -1,6 +1,7 @@
 package org.bitbucket.globehacks;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import org.bitbucket.globehacks.utils.Keys;
 import org.bitbucket.globehacks.views.fragments.HomeFragment;
 import org.bitbucket.globehacks.views.fragments.LoginFragment;
 import org.bitbucket.globehacks.views.fragments.SignupFragment;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (checkLocationPermission())
             requestLocationPermission();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     private boolean checkLocationPermission() {

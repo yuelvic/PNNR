@@ -11,6 +11,7 @@ import org.bitbucket.globehacks.modules.ApplicationModule;
 import org.bitbucket.globehacks.modules.NetworkModule;
 
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by Emmanuel Victor Garcia on 19/07/2017.
@@ -38,7 +39,15 @@ public class GlobeHack extends Application {
 
         // Initialize preferences manager
         new PreferencesManager(this).setName("globe-hacks").init();
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/font_light.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
+
+
 
     public NetworkComponent getEntityComponent() {
         return entityComponent;

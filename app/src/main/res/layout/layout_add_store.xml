@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_padding_size_large"
             android:gravity="start|center_vertical"
-            android:text="PNNR YOUR STORE"
+            android:text="LOCATE YOUR STORE"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_size_xlarge" />
 
@@ -60,8 +60,9 @@
             android:layout_marginTop="10dp"
             fancy:fb_defaultColor="@color/colorAccent"
             fancy:fb_focusColor="@color/colorAccentDark"
-            fancy:fb_text="Locate My Store"
+            fancy:fb_textFont="fonts/font_light.ttf"
             fancy:fb_radius="5dp"
+            fancy:fb_text="Drop Pin"
             fancy:fb_textColor="@color/colorWhite" />
 
         <mehdi.sakout.fancybuttons.FancyButton
@@ -73,6 +74,7 @@
             fancy:fb_defaultColor="@color/colorGray"
             fancy:fb_focusColor="@color/colorGrayDark"
             fancy:fb_radius="5dp"
+            fancy:fb_textFont="fonts/font_light.ttf"
             fancy:fb_text="Cancel"
             fancy:fb_textColor="@color/colorWhite" />
     </LinearLayout>
