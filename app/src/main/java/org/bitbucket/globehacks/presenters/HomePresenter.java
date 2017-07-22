@@ -121,10 +121,23 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
     }
 
     public void getNearbyStores() {
-//        checkNearbySubscription();
-//        nearbySubscription = mView.getApiService()
-//                .getGeoPoints(mView.getApplicationId(), mView.getRestKey(),
-//                        mView.getProfile().getToken(), )
+        checkNearbySubscription();
+        nearbySubscription = mView.getApiService()
+                .getGeoPoints(mView.getApplicationId(), mView.getRestKey(),
+                        mView.getProfile().getToken(), mView.getMapNWLatitude(),
+                        mView.getMapNWLongitude(), mView.getMapSELatitude(),
+                        mView.getMapSELongitude(), 10, "KILOMETERS", 10, false)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        geoPoints -> {
+                            mView.onGeoPointLoadSuccess(geoPoints);
+                        },
+                        throwable -> {
+                            throwable.printStackTrace();
+                            mView.onGeoPointLoadFailure();
+                        }
+                );
     }
 
 }

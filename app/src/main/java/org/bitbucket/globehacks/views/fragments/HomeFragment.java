@@ -22,6 +22,7 @@ import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.services.android.navigation.v5.MapboxNavigation;
@@ -34,6 +35,7 @@ import com.shawnlin.preferencesmanager.PreferencesManager;
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.models.Store;
+import org.bitbucket.globehacks.models.GeoPoint;
 import org.bitbucket.globehacks.models.User;
 import org.bitbucket.globehacks.presenters.HomePresenter;
 import org.bitbucket.globehacks.services.ApiService;
@@ -55,7 +57,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Emmanuel Victor Garcia on 19/07/2017.
  */
 
-public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener, MapboxMap.OnMarkerClickListener {
+
+public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener, MapboxMap.OnCameraIdleListener,MapboxMap.OnMarkerClickListener {
+
 
     private static final String TAG = HomeFragment.class.getSimpleName();
 
@@ -86,6 +90,9 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     private boolean pinStore = false;
     private LatLng pinLatLng;
 
+    // Marker components
+    private LatLngBounds latLngBounds;
+
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
         return homeFragment;
@@ -113,10 +120,12 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
             this.mapboxMap.setOnMarkerClickListener(this);
             this.mapboxMap.setOnMapLongClickListener(this);
             this.mapboxMap.setOnMyLocationChangeListener(this);
+            this.mapboxMap.setOnCameraIdleListener(this);
             if (mapboxMap.getMyLocation() == null) return;
 
+            LatLng latLng = new LatLng(mapboxMap.getMyLocation());
             cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(mapboxMap.getMyLocation()))
+                    .target(latLng)
                     .build();
 
             mapboxMap.setCameraPosition(cameraPosition);
@@ -306,6 +315,16 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     }
 
     @Override
+    public void onCameraIdle() {
+        if (mapboxMap == null) return;
+        latLngBounds = new LatLngBounds.Builder()
+                .include(new LatLng(36.532128, -93.489121))
+                .include(new LatLng(25.837058, -106.646234))
+                .build();
+        presenter.getNearbyStores();
+    }
+
+    @Override
     public void onFeatureClick(CarmenFeature feature) {
         Utilities.hideOnScreenKeyboard(this);
         Position position = feature.asPosition();
@@ -358,6 +377,26 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     }
 
     @Override
+    public double getMapNWLatitude() {
+        return latLngBounds.getNorthWest().getLatitude();
+    }
+
+    @Override
+    public double getMapNWLongitude() {
+        return latLngBounds.getNorthWest().getLongitude();
+    }
+
+    @Override
+    public double getMapSELatitude() {
+        return latLngBounds.getSouthEast().getLatitude();
+    }
+
+    @Override
+    public double getMapSELongitude() {
+        return latLngBounds.getSouthEast().getLongitude();
+    }
+
+    @Override
     public User getProfile() {
         return PreferencesManager.getObject(Keys.USER, User.class);
     }
@@ -386,6 +425,20 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     }
 
+    @Override
+    public void onGeoPointLoadSuccess(List<GeoPoint> geoPoints) {
+        mapboxMap.clear();
+        for (GeoPoint geoPoint : geoPoints) {
+            mapboxMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()))
+                    .title("Pin"));
+        }
+    }
+
+    @Override
+    public void onGeoPointLoadFailure() {
+
+    }
 
     private void showProgressDialog(){
         loadingDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
@@ -398,6 +451,5 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     private void hideProgressDialog(){
         loadingDialog.dismiss();
     }
-
 
 }
