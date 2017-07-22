@@ -23,6 +23,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -65,6 +66,26 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
         tvFullName.setText(getUser().getFirstname() + " " + getUser().getLastname());
         tvNumber.setText(getUser().getMobile());
         tvUserType.setText(getUser().getToken());
+    }
+
+    @OnClick(R.id.btn_profile_edit)
+    public void onClickEdit() {
+
+    }
+
+    @OnClick(R.id.btn_profile_preferences)
+    public void onClickProfilePref() {
+
+    }
+
+    @OnClick(R.id.btn_profile_change_password)
+    public void onClickChangedPassword() {
+
+    }
+
+    @OnClick(R.id.btn_profile_logout)
+    public void onProfileLogout() {
+
     }
 
     @NonNull

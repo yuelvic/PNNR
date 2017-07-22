@@ -19,6 +19,7 @@ import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.services.android.navigation.v5.MapboxNavigation;
 import com.mapbox.services.android.ui.geocoder.GeocoderAutoCompleteView;
 import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
 import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
@@ -55,11 +56,11 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     private CameraPosition cameraPosition;
     private MapboxMap mapboxMap;
+    private MapboxNavigation navigation;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
         return homeFragment;
-
     }
 
     @Nullable
@@ -88,6 +89,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
             mapboxMap.setCameraPosition(cameraPosition);
         });
+
+        navigation = new MapboxNavigation(getContext(), Mapbox.getAccessToken());
 
         // Configure geolocation
         geoView.setAccessToken(Mapbox.getAccessToken());
