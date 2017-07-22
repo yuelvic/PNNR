@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Store {
 
+    private String objectId;
     private String name;
     private double latitude;
     private double longitude;
@@ -15,6 +16,14 @@ public class Store {
     private boolean availability;
     @SerializedName("operation_time")
     private String operationTime;
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
 
     public String getName() {
         return name;

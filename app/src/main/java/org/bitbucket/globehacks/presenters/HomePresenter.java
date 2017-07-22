@@ -3,7 +3,6 @@ package org.bitbucket.globehacks.presenters;
 import android.util.Log;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
-import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import org.bitbucket.globehacks.models.GeoPoint;
 import org.bitbucket.globehacks.models.Store;
@@ -131,7 +130,7 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                 .getGeoPoints(mView.getApplicationId(), mView.getRestKey(),
                         mView.getProfile().getToken(), mView.getMapNWLatitude(),
                         mView.getMapNWLongitude(), mView.getMapSELatitude(),
-                        mView.getMapSELongitude(), 10, "KILOMETERS", 10, true)
+                        mView.getMapSELongitude(), 20, true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
