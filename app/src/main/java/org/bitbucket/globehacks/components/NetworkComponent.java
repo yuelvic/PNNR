@@ -2,6 +2,8 @@ package org.bitbucket.globehacks.components;
 
 import org.bitbucket.globehacks.modules.ApplicationModule;
 import org.bitbucket.globehacks.modules.NetworkModule;
+import org.bitbucket.globehacks.views.fragments.ChangePasswordFragment;
+import org.bitbucket.globehacks.views.fragments.EditProfileFragment;
 import org.bitbucket.globehacks.views.fragments.HomeFragment;
 import org.bitbucket.globehacks.views.fragments.LoginFragment;
 import org.bitbucket.globehacks.views.fragments.ProfileFragment;
@@ -20,9 +22,15 @@ import dagger.Component;
 public interface NetworkComponent {
 
     void inject(SignupFragment signupFragment);
+
     void inject(LoginFragment loginFragment);
 
     void inject(HomeFragment homeFragment);
+
     void inject(ProfileFragment profileFragment);
+
+    void inject(ChangePasswordFragment changePasswordFragment);
+
+    void inject(EditProfileFragment editProfileFragment);
 
 }
