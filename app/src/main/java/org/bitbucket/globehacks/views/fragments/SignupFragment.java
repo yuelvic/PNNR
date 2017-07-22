@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -48,7 +49,7 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
     @BindView(R.id.spn_usertype)
     Spinner spn_usertype;
     @BindView(R.id.cbx_signup_agreement)
-    Spinner cbx_signup_agreement;
+    CheckBox cbx_signup_agreement;
 
     @Inject ApiService apiService;
 
