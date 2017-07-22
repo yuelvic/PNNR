@@ -13,9 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
@@ -31,6 +33,7 @@ import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
+import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.User;
 import org.bitbucket.globehacks.presenters.HomePresenter;
 import org.bitbucket.globehacks.services.ApiService;
@@ -52,7 +55,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Emmanuel Victor Garcia on 19/07/2017.
  */
 
-public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener {
+public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener, MapboxMap.OnMarkerClickListener {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
 
@@ -107,6 +110,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(mapboxMap -> {
             this.mapboxMap = mapboxMap;
+            this.mapboxMap.setOnMarkerClickListener(this);
             this.mapboxMap.setOnMapLongClickListener(this);
             this.mapboxMap.setOnMyLocationChangeListener(this);
             if (mapboxMap.getMyLocation() == null) return;
@@ -116,6 +120,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                     .build();
 
             mapboxMap.setCameraPosition(cameraPosition);
+
+
         });
 
         mapView.addOnMapChangedListener(change -> {
@@ -271,6 +277,12 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     }
 
     @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+
+        return true;
+    }
+
+    @Override
     public void onMapLongClick(@NonNull LatLng point) {
         this.pinLatLng = point;
 
@@ -351,6 +363,17 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     }
 
     @Override
+    public void onGetStoreSuccess(Store store) {
+
+    }
+
+    @Override
+    public void onGetStoreFailure() {
+
+    }
+
+
+    @Override
     public void onAddedStoreSuccess() {
         hideProgressDialog();
         mapboxMap.clear();
@@ -363,6 +386,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     }
 
+
     private void showProgressDialog(){
         loadingDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
         loadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -374,4 +398,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     private void hideProgressDialog(){
         loadingDialog.dismiss();
     }
+
+
 }

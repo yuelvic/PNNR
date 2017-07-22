@@ -1,5 +1,6 @@
 package org.bitbucket.globehacks.views.interfaces;
 
+import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.User;
 
 /**
@@ -19,5 +20,8 @@ public interface HomeView extends BaseView {
 
     void onAddedStoreSuccess();
     void onAddedStoreFailure();
+
+    void onGetStoreSuccess(Store store);
+    void onGetStoreFailure();
 
 }
