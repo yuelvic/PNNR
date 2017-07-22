@@ -17,6 +17,7 @@ import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.HomeActivity;
 import org.bitbucket.globehacks.MainActivity;
 import org.bitbucket.globehacks.R;
+import org.bitbucket.globehacks.UserActivity;
 import org.bitbucket.globehacks.models.User;
 import org.bitbucket.globehacks.presenters.ProfilePresenter;
 import org.bitbucket.globehacks.services.ApiService;
@@ -74,7 +75,7 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
 
     @OnClick(R.id.btn_profile_edit)
     public void onClickEdit() {
-
+        startActivity(new Intent(getActivity(), UserActivity.class));
     }
 
     @OnClick(R.id.btn_profile_preferences)

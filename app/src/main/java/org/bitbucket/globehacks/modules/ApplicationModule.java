@@ -1,5 +1,7 @@
 package org.bitbucket.globehacks.modules;
 
+import com.tmxlr.lib.driodvalidatorlight.Form;
+
 import org.bitbucket.globehacks.GlobeHack;
 
 import javax.inject.Singleton;
@@ -24,6 +26,12 @@ public class ApplicationModule {
     @Singleton
     GlobeHack globeHack() {
         return globeHack;
+    }
+
+    @Provides
+    @Singleton
+    Form provideForm() {
+        return new Form(globeHack);
     }
 
 }

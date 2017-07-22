@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
+    @SerializedName("user-id")
     private String objectId;
     private String email;
     private String password;
