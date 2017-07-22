@@ -1,6 +1,7 @@
 package org.bitbucket.globehacks.views.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,9 +33,10 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implements LoginView {
 
     private static final String TAG = LoginFragment.class.getSimpleName();
-
+    private SweetAlertDialog loadingDialog;
     @BindView(R.id.edt_email) EditText etEmail;
     @BindView(R.id.edt_password) EditText etPassword;
+
 
     @Inject ApiService apiService;
 
@@ -59,9 +61,11 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
 
     @OnClick(R.id.btn_login)
     public void login() {
+
         if (etEmail.getText().toString().trim().equals("") || etPassword.getText().toString().trim().equals("")) {
             showWarningDialog();
         } else {
+            showProgressDialog();
             presenter.login();
         }
     }
@@ -82,12 +86,14 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
 
     @Override
     public void onSuccess() {
+        hideProgressDialog();
         startActivity(new Intent(getActivity(), HomeActivity.class));
         getActivity().finish();
     }
 
     @Override
     public void onFailure() {
+        hideProgressDialog();
         showErrorDialog();
     }
 
@@ -131,6 +137,18 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
                 .setContentText("Either username or password is incorrect")
                 .setConfirmText("Close")
                 .show();
+    }
+
+    private void showProgressDialog(){
+        loadingDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+        loadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        loadingDialog.setTitleText("Loading");
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+    }
+
+    private void hideProgressDialog(){
+        loadingDialog.dismiss();
     }
 
 }
