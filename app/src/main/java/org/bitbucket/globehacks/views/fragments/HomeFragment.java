@@ -287,7 +287,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-        presenter.getStore(marker.getPosition());
+//        presenter.getStore();
         return true;
     }
 

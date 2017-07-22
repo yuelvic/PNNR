@@ -1,5 +1,7 @@
 package org.bitbucket.globehacks.presenters;
 
+import android.util.Log;
+
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.shawnlin.preferencesmanager.PreferencesManager;
 import com.tmxlr.lib.driodvalidatorlight.Form;
@@ -17,6 +19,8 @@ import rx.schedulers.Schedulers;
 
 public class EditProfilePresenter extends MvpBasePresenter<EditProfileView> {
 
+    private static final String TAG = EditProfilePresenter.class.getName();
+
     private EditProfileView mView;
 
     public void initialize() {
@@ -30,7 +34,10 @@ public class EditProfilePresenter extends MvpBasePresenter<EditProfileView> {
         user.setEmail(email);
         user.setMobile(contactNumber);
 
-        mView.getApiService().updateUser(mView.getApplicationId(), mView.getRestKey(), mView.getUser().getObjectId(), user)
+        Log.d(TAG, mView.getUser().getObjectId() + " " + mView.getUser().getToken());
+
+        mView.getApiService()
+                .updateUser(mView.getApplicationId(), mView.getRestKey(), mView.getUser().getObjectId(), mView.getUser().getToken(), user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
