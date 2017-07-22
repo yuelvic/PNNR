@@ -10,10 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.truizlop.fabreveallayout.FABRevealLayout;
-import com.truizlop.fabreveallayout.OnRevealChangeListener;
-
 import org.bitbucket.globehacks.views.fragments.HomeFragment;
 import org.bitbucket.globehacks.views.fragments.ProfileFragment;
 
@@ -30,7 +26,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @BindView(R.id.nav_view) BottomNavigationView navigationView;
     @BindView(R.id.fab_action) FloatingActionButton floatingActionButton;
 
-    
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
