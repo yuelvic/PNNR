@@ -42,11 +42,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
             android:scaleType="centerCrop"
-<<<<<<< HEAD
             android:src="@drawable/img_store" />
-=======
-            android:src="@drawable/img_profile"/>
->>>>>>> f52226030ac58bd96e402c990fa0a58f1954306f
 
 
         <LinearLayout
@@ -123,12 +119,8 @@
             android:id="@+id/tv_store_route"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
             android:text="ROUTE TO STORE"
-=======
             android:padding="@dimen/margin_padding_size_small"
-            android:text="ROUTE TO"
->>>>>>> f52226030ac58bd96e402c990fa0a58f1954306f
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_size_medium"/>
