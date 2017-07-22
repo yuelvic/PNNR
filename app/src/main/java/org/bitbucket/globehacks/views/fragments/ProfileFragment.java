@@ -1,5 +1,6 @@
 package org.bitbucket.globehacks.views.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,8 @@ import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.GlobeHack;
+import org.bitbucket.globehacks.HomeActivity;
+import org.bitbucket.globehacks.MainActivity;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.models.User;
 import org.bitbucket.globehacks.presenters.ProfilePresenter;
@@ -56,6 +59,7 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        presenter.init();
         ((GlobeHack) getActivity().getApplication()).getEntityComponent().inject(this);
 
         initialize();
@@ -85,7 +89,7 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
 
     @OnClick(R.id.btn_profile_logout)
     public void onProfileLogout() {
-
+        presenter.logout();
     }
 
     @NonNull
@@ -112,6 +116,17 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
     @Override
     public User getUser() {
         return PreferencesManager.getObject(Keys.USER, User.class);
+    }
+
+    @Override
+    public void onSuccess() {
+        startActivity(new Intent(getActivity(), MainActivity.class));
+        getActivity().finish();
+    }
+
+    @Override
+    public void onFailure() {
+
     }
 
 

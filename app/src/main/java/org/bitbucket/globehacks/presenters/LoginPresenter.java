@@ -40,7 +40,6 @@ public class LoginPresenter extends MvpBasePresenter<LoginView> {
         User user = new User();
         user.setLogin(mView.getEmail());
         user.setPassword(mView.getPassword());
-
         return user;
     }
 

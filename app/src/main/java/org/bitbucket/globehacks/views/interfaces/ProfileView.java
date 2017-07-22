@@ -10,4 +10,7 @@ public interface ProfileView extends BaseView {
 
     User getUser();
 
+    void onSuccess();
+    void onFailure();
+
 }
