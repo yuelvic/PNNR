@@ -3,10 +3,13 @@ package org.bitbucket.globehacks.views.fragments;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +20,26 @@ import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.services.Constants;
+import com.mapbox.services.android.location.LostLocationEngine;
 import com.mapbox.services.android.navigation.v5.MapboxNavigation;
+import com.mapbox.services.android.navigation.v5.RouteProgress;
+import com.mapbox.services.android.navigation.v5.listeners.AlertLevelChangeListener;
+import com.mapbox.services.android.navigation.v5.listeners.ProgressChangeListener;
+import com.mapbox.services.android.telemetry.location.LocationEngine;
 import com.mapbox.services.android.ui.geocoder.GeocoderAutoCompleteView;
 import com.mapbox.services.api.directions.v5.models.DirectionsResponse;
+import com.mapbox.services.api.directions.v5.models.DirectionsRoute;
 import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
 import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.services.commons.geojson.LineString;
 import com.mapbox.services.commons.models.Position;
 import com.shawnlin.preferencesmanager.PreferencesManager;
 
@@ -43,6 +55,7 @@ import org.bitbucket.globehacks.utils.Utilities;
 import org.bitbucket.globehacks.views.interfaces.HomeView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -55,12 +68,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.mapbox.services.android.navigation.v5.NavigationConstants.ARRIVE_ALERT_LEVEL;
+import static com.mapbox.services.android.navigation.v5.NavigationConstants.DEPART_ALERT_LEVEL;
+import static com.mapbox.services.android.navigation.v5.NavigationConstants.HIGH_ALERT_LEVEL;
+import static com.mapbox.services.android.navigation.v5.NavigationConstants.LOW_ALERT_LEVEL;
+import static com.mapbox.services.android.navigation.v5.NavigationConstants.MEDIUM_ALERT_LEVEL;
+
 /**
  * Created by Emmanuel Victor Garcia on 19/07/2017.
  */
 
 
-public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener, MapboxMap.OnCameraIdleListener,MapboxMap.OnMarkerClickListener {
+public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener,
+        GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener, MapboxMap.OnCameraIdleListener,MapboxMap.OnMarkerClickListener,
+        AlertLevelChangeListener, ProgressChangeListener {
 
 
     private static final String TAG = HomeFragment.class.getSimpleName();
@@ -91,6 +112,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     private CameraPosition cameraPosition;
     private MapboxMap mapboxMap;
     private MapboxNavigation navigation;
+    private LocationEngine locationEngine;
 
     // Flag components
     private boolean pinStore = false;
@@ -99,6 +121,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     // Marker components
     private LatLngBounds latLngBounds;
     private Store store;
+
+    private List<LatLng> latLngList;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -117,6 +141,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         ButterKnife.bind(this, view);
         ((GlobeHack) getActivity().getApplication()).getEntityComponent().inject(this);
         presenter.init();
+
+        latLngList = new ArrayList<>();
 
         fabStore.setOnClickListener(this);
         fabCancel.setOnClickListener(this);
@@ -150,13 +176,19 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                     break;
             }
         });
-        navigation = new MapboxNavigation(getContext(), Mapbox.getAccessToken());
 
         // Configure geolocation
         geoView.setAccessToken(Mapbox.getAccessToken());
         geoView.setType(GeocodingCriteria.TYPE_POI);
         geoView.setCountry("PH");
         geoView.setOnFeatureListener(this);
+
+        locationEngine = LostLocationEngine.getLocationEngine(getContext());
+        navigation = new MapboxNavigation(getContext(), getString(R.string.api_key_mapbox));
+        navigation.setLocationEngine(locationEngine);
+
+        navigation.addAlertLevelChangeListener(this);
+        navigation.addProgressChangeListener(this);
     }
 
     @Override
@@ -187,6 +219,11 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @Override
     public void onDestroy() {
         mapView.onDestroy();
+
+        navigation.removeAlertLevelChangeListener(this);
+        navigation.removeProgressChangeListener(this);
+        navigation.endNavigation();
+
         super.onDestroy();
     }
 
@@ -276,14 +313,44 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @OnClick(R.id.tv_store_route)
     public void navigateToStore() {
         if (mapboxMap == null || mapboxMap.getMyLocation() == null) return;
-        Position origin = Position.fromLngLat(mapboxMap.getMyLocation().getLatitude(),
-                mapboxMap.getMyLocation().getLongitude());
-        Position destination = Position.fromLngLat(store.getLatitude(), store.getLongitude());
+        showProgressDialog();
+
+        Position origin = Position.fromCoordinates(mapboxMap.getMyLocation().getLongitude(),
+                mapboxMap.getMyLocation().getLatitude());
+        Position destination = Position.fromCoordinates(store.getLongitude(), store.getLatitude());
+        Log.d(TAG, Double.toString(store.getLatitude()) + " " + Double.toString(store.getLongitude()));
 
         navigation.getRoute(origin, destination, new Callback<DirectionsResponse>() {
             @Override
             public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                Log.d(TAG, Integer.toString(response.code()) + " " + response.message());
+                hideProgressDialog();
 
+                if (response.body().getRoutes() != null) {
+                    List<DirectionsRoute> directionsRoutes = response.body().getRoutes();
+
+                    for (int i = 0; i < directionsRoutes.size(); i++) {
+                        DirectionsRoute directionsRoute = directionsRoutes.get(i);
+
+                        navigation.startNavigation(directionsRoute);
+
+                        LineString lineString = LineString.fromPolyline(directionsRoute.getGeometry(), Constants.OSRM_PRECISION_V5);
+                        List<Position> coordinates = lineString.getCoordinates();
+                        Log.d(TAG, String.valueOf(coordinates));
+
+                        for (int j = 0; j < coordinates.size(); j++) {
+                            double newLat = coordinates.get(j).getLatitude() * .10;
+                            double newLong = coordinates.get(j).getLongitude() * .10;
+
+                            latLngList.add(new LatLng(newLat, newLong));
+                        }
+
+                        mapboxMap.addPolyline(new PolylineOptions()
+                                .addAll(latLngList)
+                                .color(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark))
+                                .width(5));
+                    }
+                }
             }
 
             @Override
@@ -476,7 +543,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public void onGeoPointLoadSuccess(List<GeoPoint> geoPoints) {
-        mapboxMap.clear();
+//        mapboxMap.clear();
         for (GeoPoint geoPoint : geoPoints) {
             mapboxMap.addMarker(new MarkerOptions()
                     .position(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()))
@@ -502,4 +569,27 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         loadingDialog.dismiss();
     }
 
+    @Override
+    public void onAlertLevelChange(int alertLevel, RouteProgress routeProgress) {
+        switch (alertLevel) {
+            case DEPART_ALERT_LEVEL:
+                break;
+            case LOW_ALERT_LEVEL:
+                break;
+            case MEDIUM_ALERT_LEVEL:
+                break;
+            case HIGH_ALERT_LEVEL:
+                break;
+            case ARRIVE_ALERT_LEVEL:
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    @Override
+    public void onProgressChange(Location location, RouteProgress routeProgress) {
+        Log.d(TAG, Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100) / 100) + " km");
+    }
 }
