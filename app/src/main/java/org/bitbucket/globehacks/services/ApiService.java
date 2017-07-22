@@ -11,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -32,6 +33,11 @@ public interface ApiService {
     @GET("{app_id}/{rest_key}/users/isvalidusertoken/{token}")
     Observable<Boolean> validateSession(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
                                         @Path("token") String token);
+
+    @Headers("Content-Type:application/json")
+    @PUT("{app_id}/{rest_key}/users/{object_id}")
+    Observable<User> updateUser(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
+                                @Path("token") String token, @Body User user);
 
     @GET("{app_id}/{rest_key}/users/logout")
     Observable<Boolean> logout(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
@@ -57,9 +63,9 @@ public interface ApiService {
 
     @GET("{app_id}/{rest_key}/geo/points")
     Observable<List<GeoPoint>> getGeoPoints(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
-                                            @Header("user-token") String token, @Query("latitude") double latitude,
-                                            @Query("longitude") double longitude, @Query("radius") int radius,
-                                            @Query("units") String unit, @Query("pageSize") int pageSize,
-                                            @Query("metaInResponse") boolean meta);
+                                            @Header("user-token") String token, @Query("nw-latitude") double nwLatitude,
+                                            @Query("nw-longitude") double nwLongitude, @Query("se-latitude") double seLatitude,
+                                            @Query("se-longitude") double seLongitude, @Query("radius") int radius, @Query("units") String unit,
+                                            @Query("pageSize") int pageSize, @Query("metaInResponse") boolean meta);
 
 }

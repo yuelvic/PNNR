@@ -2,6 +2,7 @@ package org.bitbucket.globehacks.presenters;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
+import org.bitbucket.globehacks.models.GeoPoint;
 import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.views.interfaces.HomeView;
 
@@ -20,6 +21,8 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
     private HomeView mView;
 
     private Subscription storeSubscription;
+    private Subscription pointSubscription;
+    private Subscription nearbySubscription;
 
     public void init() {
         mView = getView();
@@ -27,11 +30,23 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
 
     public void release() {
         checkStoreSubscription();
+        checkPointSubscription();
+        checkNearbySubscription();
     }
 
     private void checkStoreSubscription() {
         if (storeSubscription != null && storeSubscription.isUnsubscribed())
             storeSubscription.unsubscribe();
+    }
+
+    private void checkPointSubscription() {
+        if (pointSubscription != null && pointSubscription.isUnsubscribed())
+            pointSubscription.unsubscribe();
+    }
+
+    private void checkNearbySubscription() {
+        if (nearbySubscription != null && nearbySubscription.isUnsubscribed())
+            nearbySubscription.unsubscribe();
     }
 
     private Store createStore() {
@@ -48,12 +63,37 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
 
     public void putStore() {
         checkStoreSubscription();
+
+        Store mStore = createStore();
         storeSubscription = mView.getApiService()
-                .putStore(mView.getApplicationId(), mView.getRestKey(), mView.getProfile().getToken(), createStore())
+                .putStore(mView.getApplicationId(), mView.getRestKey(), mView.getProfile().getToken(), mStore)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         store -> {
+                            GeoPoint geoPoint = new GeoPoint();
+                            geoPoint.setLatitude(mStore.getLatitude());
+                            geoPoint.setLongitude(mStore.getLongitude());
+                            geoPoint.setMetadata(store);
+
+                            putGeoPoint(geoPoint);
+                        },
+                        throwable -> {
+                            throwable.printStackTrace();
+                            mView.onAddedStoreFailure();
+                        }
+                );
+    }
+
+    private void putGeoPoint(GeoPoint geoPoint) {
+        checkPointSubscription();
+        pointSubscription = mView.getApiService()
+                .putGeoPoint(mView.getApplicationId(), mView.getRestKey(),
+                        mView.getProfile().getToken(), geoPoint)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        point -> {
                             mView.onAddedStoreSuccess();
                         },
                         throwable -> {
@@ -61,6 +101,13 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                             mView.onAddedStoreFailure();
                         }
                 );
+    }
+
+    public void getNearbyStores() {
+//        checkNearbySubscription();
+//        nearbySubscription = mView.getApiService()
+//                .getGeoPoints(mView.getApplicationId(), mView.getRestKey(),
+//                        mView.getProfile().getToken(), )
     }
 
 }
