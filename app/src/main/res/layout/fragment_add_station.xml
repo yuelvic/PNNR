@@ -3,7 +3,7 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
 
@@ -12,11 +12,6 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_signup" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,48 +65,48 @@
 
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/btn_reg_location_select"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="@dimen/margin_padding_size_small"
                     android:layout_marginRight="@dimen/margin_padding_size_small"
                     android:layout_marginTop="@dimen/margin_padding_size_medium"
                     android:padding="@dimen/margin_padding_size_medium"
-                    fancy:fb_defaultColor="@color/colorAccent"
-                    fancy:fb_focusColor="@color/colorAccentDark"
+                    fancy:fb_defaultColor="@color/colorWhite"
+                    fancy:fb_focusColor="@color/colorWhiteAsh"
                     fancy:fb_radius="20dp"
                     fancy:fb_text="Locate My Store"
-                    fancy:fb_textColor="@color/colorWhite" />
+                    fancy:fb_textColor="@color/colorAccent" />
 
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/btn_reg_location_confirm"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="@dimen/margin_padding_size_small"
                     android:layout_marginRight="@dimen/margin_padding_size_small"
                     android:layout_marginTop="@dimen/margin_padding_size_medium"
                     android:padding="@dimen/margin_padding_size_medium"
-                    fancy:fb_defaultColor="@color/colorPrimary"
-                    fancy:fb_focusColor="@color/colorPrimaryDark"
+                    fancy:fb_defaultColor="@color/colorWhite"
+                    fancy:fb_focusColor="@color/colorWhiteAsh"
                     fancy:fb_radius="20dp"
                     fancy:fb_text="Pnnr Store"
-                    fancy:fb_textColor="@color/colorWhite" />
+                    fancy:fb_textColor="@color/colorPrimary" />
 
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/btn_reg_location_cancel"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="@dimen/margin_padding_size_small"
                     android:layout_marginRight="@dimen/margin_padding_size_small"
                     android:layout_marginTop="@dimen/margin_padding_size_medium"
                     android:padding="@dimen/margin_padding_size_medium"
-                    fancy:fb_defaultColor="@color/colorGrayDark"
-                    fancy:fb_focusColor="@color/colorGray"
+                    fancy:fb_defaultColor="@color/colorWhite"
+                    fancy:fb_focusColor="@color/colorWhiteAsh"
                     fancy:fb_radius="20dp"
                     fancy:fb_text="Cancel"
-                    fancy:fb_textColor="@color/colorWhite" />
+                    fancy:fb_textColor="@color/colorGray" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

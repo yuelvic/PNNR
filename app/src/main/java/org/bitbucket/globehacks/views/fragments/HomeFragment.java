@@ -18,6 +18,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.services.android.ui.geocoder.GeocoderAutoCompleteView;
 import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
+import com.truizlop.fabreveallayout.FABRevealLayout;
 
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.presenters.HomePresenter;
@@ -43,6 +44,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
         return homeFragment;
+
     }
 
     @Nullable

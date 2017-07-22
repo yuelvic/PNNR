@@ -74,8 +74,6 @@ dependencies {
     // custom components
     compile 'com.github.medyo:fancybuttons:1.8.3'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.truizlop.fabreveallayout:library:1.0.0'
-
 
 
     // custom loader

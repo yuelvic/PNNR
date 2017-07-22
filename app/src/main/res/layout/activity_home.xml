@@ -14,46 +14,16 @@
         app:itemTextColor="@android:color/white"
         app:menu="@menu/menu_bottom_navigation"/>
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_above="@id/nav_view"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_margin="@dimen/margin_padding_size_medium"-->
-        <!--android:elevation="@dimen/margin_padding_size_small"-->
-        <!--android:src="@drawable/ic_add"/>-->
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/nav_view"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/margin_padding_size_medium"
+        android:elevation="@dimen/margin_padding_size_small"
+        android:src="@drawable/ic_add"
+        android:id="@+id/fab_action"/>
 
-    <com.truizlop.fabreveallayout.FABRevealLayout
-        android:id="@+id/fab_reveal_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="100dp"
-        android:layout_alignParentBottom="true"
-        >
-
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="@color/colorAccent"
-            android:src="@drawable/ic_add"
-            />
-
-        <RelativeLayout
-            android:id="@+id/main_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/secondary_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-        </RelativeLayout>
-
-    </com.truizlop.fabreveallayout.FABRevealLayout>
     <FrameLayout
         android:id="@+id/content_home"
         android:layout_width="match_parent"
