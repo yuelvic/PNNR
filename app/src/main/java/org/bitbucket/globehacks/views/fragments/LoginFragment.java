@@ -1,6 +1,7 @@
 package org.bitbucket.globehacks.views.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Emmanuel Victor Garcia on 7/20/17.
@@ -31,9 +33,10 @@ import butterknife.OnClick;
 public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implements LoginView {
 
     private static final String TAG = LoginFragment.class.getSimpleName();
-
+    private SweetAlertDialog loadingDialog;
     @BindView(R.id.edt_email) EditText etEmail;
     @BindView(R.id.edt_password) EditText etPassword;
+
 
     @Inject ApiService apiService;
 
@@ -58,7 +61,13 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
 
     @OnClick(R.id.btn_login)
     public void login() {
-        presenter.login();
+
+        if (etEmail.getText().toString().trim().equals("") || etPassword.getText().toString().trim().equals("")) {
+            showWarningDialog();
+        } else {
+            showProgressDialog();
+            presenter.login();
+        }
     }
 
     @OnClick(R.id.btn_login_signup)
@@ -77,13 +86,15 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
 
     @Override
     public void onSuccess() {
+        hideProgressDialog();
         startActivity(new Intent(getActivity(), HomeActivity.class));
         getActivity().finish();
     }
 
     @Override
     public void onFailure() {
-
+        hideProgressDialog();
+        showErrorDialog();
     }
 
     @Override
@@ -110,4 +121,34 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
     public ApiService getApiService() {
         return apiService;
     }
+
+
+    private void showWarningDialog() {
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("All fields required")
+                .setContentText("Please fill up all fields")
+                .setConfirmText("Close")
+                .show();
+    }
+
+    private void showErrorDialog() {
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Invalid Credentials")
+                .setContentText("Either username or password is incorrect")
+                .setConfirmText("Close")
+                .show();
+    }
+
+    private void showProgressDialog(){
+        loadingDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+        loadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        loadingDialog.setTitleText("Loading");
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+    }
+
+    private void hideProgressDialog(){
+        loadingDialog.dismiss();
+    }
+
 }

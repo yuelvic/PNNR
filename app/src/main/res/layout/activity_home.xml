@@ -14,22 +14,10 @@
         app:itemTextColor="@android:color/white"
         app:menu="@menu/menu_bottom_navigation"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/nav_view"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/margin_padding_size_medium"
-        android:elevation="@dimen/margin_padding_size_small"
-        android:src="@drawable/ic_add"
-        android:id="@+id/fab_action"/>
-
     <FrameLayout
         android:id="@+id/content_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/nav_view"/>
-
-
 
 </RelativeLayout>

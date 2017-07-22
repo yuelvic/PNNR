@@ -6,6 +6,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,17 +41,23 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
  * Created by Emmanuel Victor Garcia on 19/07/2017.
  */
 
-public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener, GeocoderAutoCompleteView.OnFeatureListener {
+public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener, MapboxMap.OnMyLocationChangeListener, GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
 
+    @BindView(R.id.view_home) View homeView;
     @BindView(R.id.map_view) MapView mapView;
     @BindView(R.id.geo_view) GeocoderAutoCompleteView geoView;
+    @BindView(R.id.fab_action) FloatingActionButton fabStore;
+
+    @BindView(R.id.view_add_store) View addStoreView;
 
     @Inject ApiService apiService;
 
@@ -75,6 +82,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         ButterKnife.bind(this, view);
         ((GlobeHack) getActivity().getApplication()).getEntityComponent().inject(this);
         presenter.init();
+
+        fabStore.setOnClickListener(this);
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(mapboxMap -> {
@@ -148,6 +157,11 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         return new HomePresenter();
     }
 
+    /**
+     * Update map position
+     * @param latitude
+     * @param longitude
+     */
     private void updateMap(double latitude, double longitude) {
         mapboxMap.clear();
         mapboxMap.addMarker(new MarkerOptions()
@@ -159,6 +173,34 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                 .zoom(15)
                 .build();
         mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 5000, null);
+    }
+
+    private void showStoreForm() {
+        geoView.setVisibility(View.GONE);
+        fabStore.setVisibility(View.GONE);
+
+        addStoreView.setVisibility(View.VISIBLE);
+        addStoreView.setY(homeView.getHeight());
+        addStoreView.clearAnimation();
+        addStoreView.animate().translationY(0).start();
+    }
+
+    @OnClick(R.id.btn_add_store_cancel)
+    public void hideStoreForm() {
+        geoView.setVisibility(View.VISIBLE);
+        fabStore.setVisibility(View.VISIBLE);
+
+        addStoreView.clearAnimation();
+        addStoreView.animate().translationY(homeView.getHeight()).start();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fab_action:
+                showStoreForm();
+                break;
+        }
     }
 
     @Override

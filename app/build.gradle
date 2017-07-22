@@ -75,13 +75,9 @@ dependencies {
     // custom components
     compile 'com.github.medyo:fancybuttons:1.8.3'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-
+    compile 'com.sothree.slidinguppanel:library:3.3.1'
 
     // custom loader
     compile 'cn.pedant.sweetalert:library:1.3'
-
-
-
-
 
 }
