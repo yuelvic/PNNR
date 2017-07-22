@@ -134,7 +134,7 @@ public class LoginFragment extends MvpFragment<LoginView, LoginPresenter> implem
     private void showErrorDialog() {
         new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
                 .setTitleText("Invalid Credentials")
-                .setContentText("Either username or password is incorrect")
+                .setContentText("Either `name or password is incorrect")
                 .setConfirmText("Close")
                 .show();
     }
