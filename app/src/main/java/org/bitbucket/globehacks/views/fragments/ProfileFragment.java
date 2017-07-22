@@ -1,5 +1,6 @@
 package org.bitbucket.globehacks.views.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -32,7 +34,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> implements ProfileView {
 
     private static final String TAG = ProfileFragment.class.getSimpleName();
-
     @BindView(R.id.civ_profile_image) CircleImageView civProfileImage;
     @BindView(R.id.tv_fullname) TextView tvFullName;
     @BindView(R.id.tv_number) TextView tvNumber;
@@ -92,4 +93,6 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
     public User getUser() {
         return PreferencesManager.getObject(Keys.USER, User.class);
     }
+
+
 }

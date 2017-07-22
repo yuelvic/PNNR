@@ -1,5 +1,7 @@
 package org.bitbucket.globehacks.presenters;
 
+import android.util.Log;
+
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.shawnlin.preferencesmanager.PreferencesManager;
 

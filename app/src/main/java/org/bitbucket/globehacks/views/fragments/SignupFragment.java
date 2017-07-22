@@ -1,6 +1,7 @@
 package org.bitbucket.globehacks.views.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Emmanuel Victor Garcia on 7/20/17.
@@ -36,6 +38,7 @@ import butterknife.OnClick;
 public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> implements SignupView {
 
     private static final String TAG = SignupFragment.class.getSimpleName();
+    private SweetAlertDialog loadingDialog;
     @BindView(R.id.edt_contact_number)
     EditText edt_contact_number;
     @BindView(R.id.edt_email)
@@ -77,7 +80,14 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
 
     @OnClick(R.id.btn_confirm)
     public void signup() {
-        presenter.register();
+        if(edt_contact_number.getText().toString().trim().equals("") || edt_email.getText().toString().trim().equals("") || edt_password.getText().toString().trim().equals("") || edt_firstname.getText().toString().trim().equals("") || edt_password.getText().toString().trim().equals("")){
+            showWarningDialog();
+        }else if(!cbx_signup_agreement.isChecked()){
+            showWarningAgreementDialog();
+        }else{
+            showProgressDialog();
+            presenter.register();
+        }
     }
 
     @OnClick(R.id.btn_cancel)
@@ -96,13 +106,15 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
 
     @Override
     public void onSuccess() {
+        hideProgressDialog();
         startActivity(new Intent(getActivity(), HomeActivity.class));
         getActivity().finish();
     }
 
     @Override
     public void onFailure() {
-
+        hideProgressDialog();
+        showErrorDialog();
     }
 
     @Override
@@ -153,5 +165,42 @@ public class SignupFragment extends MvpFragment<SignupView, SignupPresenter> imp
     @Override
     public ApiService getApiService() {
         return apiService;
+    }
+
+
+    private void showWarningAgreementDialog() {
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Invalid registration")
+                .setContentText("You must agree with the Terms and Agreements")
+                .setConfirmText("Close")
+                .show();
+    }
+
+    private void showWarningDialog() {
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("All fields required")
+                .setContentText("Please fill up all fields")
+                .setConfirmText("Close")
+                .show();
+    }
+
+    private void showErrorDialog() {
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Invalid registration")
+                .setContentText("Either contact number or email already exist in our database")
+                .setConfirmText("Close")
+                .show();
+    }
+
+    private void showProgressDialog(){
+        loadingDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+        loadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        loadingDialog.setTitleText("Loading");
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+    }
+
+    private void hideProgressDialog(){
+        loadingDialog.dismiss();
     }
 }
