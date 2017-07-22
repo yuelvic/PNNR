@@ -3,7 +3,7 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="#cc000000"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
@@ -41,59 +41,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_size_small"
-            android:backgroundTint="@color/colorAccent"
+            android:background="@drawable/bg_adding_form"
             android:gravity="center_horizontal"
+            android:padding="@dimen/margin_padding_size_small"
             android:hint="your store name"
             android:inputType="text"
+            android:focusable="true"
             android:maxLines="1"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorBlack"
             android:textColorHint="@color/colorGrayDark" />
 
 
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_reg_location_select"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_add_store_locate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/margin_padding_size_small"
-            android:layout_marginRight="@dimen/margin_padding_size_small"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:padding="@dimen/margin_padding_size_medium"
-            fancy:fb_defaultColor="@color/colorWhite"
-            fancy:fb_focusColor="@color/colorWhiteAsh"
-            fancy:fb_radius="20dp"
+            android:layout_marginTop="10dp"
+            fancy:fb_defaultColor="@color/colorAccent"
+            fancy:fb_focusColor="@color/colorAccentDark"
             fancy:fb_text="Locate My Store"
-            fancy:fb_textColor="@color/colorAccent" />
-
-        <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_reg_location_confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/margin_padding_size_small"
-            android:layout_marginRight="@dimen/margin_padding_size_small"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:padding="@dimen/margin_padding_size_medium"
-            fancy:fb_defaultColor="@color/colorWhite"
-            fancy:fb_focusColor="@color/colorWhiteAsh"
-            fancy:fb_radius="20dp"
-            fancy:fb_text="Pnnr Store"
-            fancy:fb_textColor="@color/colorPrimary" />
+            fancy:fb_radius="5dp"
+            fancy:fb_textColor="@color/colorWhite" />
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/btn_add_store_cancel"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/margin_padding_size_small"
-            android:layout_marginRight="@dimen/margin_padding_size_small"
-            android:layout_marginTop="@dimen/margin_padding_size_medium"
-            android:padding="@dimen/margin_padding_size_medium"
-            fancy:fb_defaultColor="@color/colorWhite"
-            fancy:fb_focusColor="@color/colorWhiteAsh"
-            fancy:fb_radius="20dp"
+            android:layout_marginTop="10dp"
+            fancy:fb_defaultColor="@color/colorGray"
+            fancy:fb_focusColor="@color/colorGrayDark"
+            fancy:fb_radius="5dp"
             fancy:fb_text="Cancel"
-            fancy:fb_textColor="@color/colorGray" />
+            fancy:fb_textColor="@color/colorWhite" />
     </LinearLayout>
 
 </LinearLayout>
