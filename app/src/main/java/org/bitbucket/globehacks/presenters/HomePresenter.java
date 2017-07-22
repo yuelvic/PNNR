@@ -108,15 +108,15 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                 );
     }
 
-    public void getStore(Store store1) {
+    public void getStore(String objectId) {
         checkStoreSubscription();
         storeSubscription = mView.getApiService()
-                .getStore(mView.getApplicationId(), mView.getRestKey(), mView.getProfile().getToken(), mView.getProfile().getObjectId())
+                .getStore(mView.getApplicationId(), mView.getRestKey(), mView.getProfile().getToken(), objectId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        store -> {
-                            mView.onGetStoreSuccess(store1);
+                        mStore -> {
+                            mView.onGetStoreSuccess(mStore);
                         },
                         throwable -> {
                             throwable.printStackTrace();

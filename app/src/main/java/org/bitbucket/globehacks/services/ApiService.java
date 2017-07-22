@@ -49,9 +49,9 @@ public interface ApiService {
     Observable<Store> putStore(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
                                @Header("user-token") String token, @Body Store store);
 
-    @GET("{app_id}/{rest_key}/data/Store/")
+    @GET("{app_id}/{rest_key}/data/Store/{object_id}")
     Observable<Store> getStore(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
-                               @Header("user-token") String token, @Path("where") String objectId);
+                               @Header("user-token") String token, @Path("object_id") String objectId);
 
     @GET("{app_id}/{rest_key}/data/Store")
     Observable<List<Store>> getStores(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
