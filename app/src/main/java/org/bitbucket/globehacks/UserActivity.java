@@ -19,6 +19,7 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Profile");
         setContentView(R.layout.activity_user);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
