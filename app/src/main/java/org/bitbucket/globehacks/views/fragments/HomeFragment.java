@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.mapbox.mapboxsdk.Mapbox;
@@ -30,11 +31,14 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.services.Constants;
 import com.mapbox.services.android.location.LostLocationEngine;
 import com.mapbox.services.android.navigation.v5.MapboxNavigation;
+import com.mapbox.services.android.navigation.v5.MapboxNavigationOptions;
 import com.mapbox.services.android.navigation.v5.RouteProgress;
 import com.mapbox.services.android.navigation.v5.listeners.AlertLevelChangeListener;
+import com.mapbox.services.android.navigation.v5.listeners.OffRouteListener;
 import com.mapbox.services.android.navigation.v5.listeners.ProgressChangeListener;
 import com.mapbox.services.android.telemetry.location.LocationEngine;
 import com.mapbox.services.android.ui.geocoder.GeocoderAutoCompleteView;
+import com.mapbox.services.api.directions.v5.DirectionsCriteria;
 import com.mapbox.services.api.directions.v5.models.DirectionsResponse;
 import com.mapbox.services.api.directions.v5.models.DirectionsRoute;
 import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
@@ -45,8 +49,8 @@ import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.GlobeHack;
 import org.bitbucket.globehacks.R;
-import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.GeoPoint;
+import org.bitbucket.globehacks.models.Store;
 import org.bitbucket.globehacks.models.User;
 import org.bitbucket.globehacks.presenters.HomePresenter;
 import org.bitbucket.globehacks.services.ApiService;
@@ -73,6 +77,7 @@ import static com.mapbox.services.android.navigation.v5.NavigationConstants.DEPA
 import static com.mapbox.services.android.navigation.v5.NavigationConstants.HIGH_ALERT_LEVEL;
 import static com.mapbox.services.android.navigation.v5.NavigationConstants.LOW_ALERT_LEVEL;
 import static com.mapbox.services.android.navigation.v5.NavigationConstants.MEDIUM_ALERT_LEVEL;
+import static com.mapbox.services.android.navigation.v5.NavigationConstants.NONE_ALERT_LEVEL;
 
 /**
  * Created by Emmanuel Victor Garcia on 19/07/2017.
@@ -81,10 +86,12 @@ import static com.mapbox.services.android.navigation.v5.NavigationConstants.MEDI
 
 public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implements HomeView, MapboxMap.OnMapLongClickListener,
         GeocoderAutoCompleteView.OnFeatureListener, View.OnClickListener, MapboxMap.OnCameraIdleListener,MapboxMap.OnMarkerClickListener,
-        AlertLevelChangeListener, ProgressChangeListener {
+        AlertLevelChangeListener, ProgressChangeListener, OffRouteListener {
 
 
     private static final String TAG = HomeFragment.class.getSimpleName();
+
+
 
     private static final int WILL_START_RENDERING_MAP = 11;
     private static final int DID_FINISH_RENDERING_MAP = 12;
@@ -112,7 +119,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     private CameraPosition cameraPosition;
     private MapboxMap mapboxMap;
     private MapboxNavigation navigation;
-    private LocationEngine locationEngine;
+    private Position destination;
 
     // Flag components
     private boolean pinStore = false;
@@ -141,6 +148,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         ButterKnife.bind(this, view);
         ((GlobeHack) getActivity().getApplication()).getEntityComponent().inject(this);
         presenter.init();
+
 
         latLngList = new ArrayList<>();
 
@@ -183,13 +191,19 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         geoView.setCountry("PH");
         geoView.setOnFeatureListener(this);
 
-        locationEngine = LostLocationEngine.getLocationEngine(getContext());
-        navigation = new MapboxNavigation(getContext(), getString(R.string.api_key_mapbox));
+        LocationEngine locationEngine = LostLocationEngine.getLocationEngine(getContext());
+        MapboxNavigationOptions options = new MapboxNavigationOptions();
+        options.setDirectionsProfile(DirectionsCriteria.PROFILE_DRIVING);
+        options.setManeuverZoneRadius(70);
+        options.setSecondsBeforeReroute(2);
+        navigation = new MapboxNavigation(getContext(), getString(R.string.api_key_mapbox), options);
         navigation.setLocationEngine(locationEngine);
 
         navigation.addAlertLevelChangeListener(this);
         navigation.addProgressChangeListener(this);
+        navigation.addOffRouteListener(this);
     }
+
 
     @Override
     public void onResume() {
@@ -222,6 +236,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
         navigation.removeAlertLevelChangeListener(this);
         navigation.removeProgressChangeListener(this);
+        navigation.removeOffRouteListener(this);
         navigation.endNavigation();
 
         super.onDestroy();
@@ -313,12 +328,15 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @OnClick(R.id.tv_store_route)
     public void navigateToStore() {
         if (mapboxMap == null || mapboxMap.getMyLocation() == null) return;
+
+
         showProgressDialog();
 
         Position origin = Position.fromCoordinates(mapboxMap.getMyLocation().getLongitude(),
                 mapboxMap.getMyLocation().getLatitude());
-        Position destination = Position.fromCoordinates(store.getLongitude(), store.getLatitude());
+        destination = Position.fromCoordinates(store.getLongitude(), store.getLatitude());
         Log.d(TAG, Double.toString(store.getLatitude()) + " " + Double.toString(store.getLongitude()));
+
 
         navigation.getRoute(origin, destination, new Callback<DirectionsResponse>() {
             @Override
@@ -326,30 +344,28 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                 Log.d(TAG, Integer.toString(response.code()) + " " + response.message());
                 hideProgressDialog();
 
-                if (response.body().getRoutes() != null) {
-                    List<DirectionsRoute> directionsRoutes = response.body().getRoutes();
+                List<DirectionsRoute> directionsRoutes = response.body().getRoutes();
 
-                    for (int i = 0; i < directionsRoutes.size(); i++) {
-                        DirectionsRoute directionsRoute = directionsRoutes.get(i);
+                for (int i = 0; i < directionsRoutes.size(); i++) {
+                    DirectionsRoute directionsRoute = directionsRoutes.get(i);
 
-                        navigation.startNavigation(directionsRoute);
+                    navigation.startNavigation(directionsRoute);
 
-                        LineString lineString = LineString.fromPolyline(directionsRoute.getGeometry(), Constants.OSRM_PRECISION_V5);
-                        List<Position> coordinates = lineString.getCoordinates();
-                        Log.d(TAG, String.valueOf(coordinates));
+                    LineString lineString = LineString.fromPolyline(directionsRoute.getGeometry(), Constants.OSRM_PRECISION_V5);
+                    List<Position> coordinates = lineString.getCoordinates();
+                    Log.d(TAG, String.valueOf(coordinates));
 
-                        for (int j = 0; j < coordinates.size(); j++) {
-                            double newLat = coordinates.get(j).getLatitude() * .10;
-                            double newLong = coordinates.get(j).getLongitude() * .10;
+                    for (int j = 0; j < coordinates.size(); j++) {
+                        double newLat = coordinates.get(j).getLatitude() * .10;
+                        double newLong = coordinates.get(j).getLongitude() * .10;
 
-                            latLngList.add(new LatLng(newLat, newLong));
-                        }
-
-                        mapboxMap.addPolyline(new PolylineOptions()
-                                .addAll(latLngList)
-                                .color(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark))
-                                .width(5));
+                        latLngList.add(new LatLng(newLat, newLong));
                     }
+
+                    mapboxMap.addPolyline(new PolylineOptions()
+                            .addAll(latLngList)
+                            .color(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark))
+                            .width(5));
                 }
             }
 
@@ -402,7 +418,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-        showProgressDialog();
+//        showProgressDialog();
         presenter.getStore(marker.getTitle());
         showStoreInfo();
         return true;
@@ -486,8 +502,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         return getProfile().getObjectId();
     }
 
-
-
     @Override
     public double getMapNWLatitude() {
         return latLngBounds.getNorthWest().getLatitude();
@@ -527,7 +541,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     }
 
-
     @Override
     public void onAddedStoreSuccess() {
         hideProgressDialog();
@@ -538,12 +551,13 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @Override
     public void onAddedStoreFailure() {
         hideProgressDialog();
-
     }
 
     @Override
     public void onGeoPointLoadSuccess(List<GeoPoint> geoPoints) {
-//        mapboxMap.clear();
+        // causing polyline to remove while moving the camera
+        // mapboxMap.clear();
+
         for (GeoPoint geoPoint : geoPoints) {
             mapboxMap.addMarker(new MarkerOptions()
                     .position(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()))
@@ -560,7 +574,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     private void showProgressDialog(){
         loadingDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
         loadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        loadingDialog.setTitleText("Loading");
+        loadingDialog.setTitleText("Loading. Please wait...");
         loadingDialog.setCancelable(false);
         loadingDialog.show();
     }
@@ -573,23 +587,73 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     public void onAlertLevelChange(int alertLevel, RouteProgress routeProgress) {
         switch (alertLevel) {
             case DEPART_ALERT_LEVEL:
+                Toast.makeText(getContext(), "Navigation Started", Toast.LENGTH_SHORT).show();
                 break;
             case LOW_ALERT_LEVEL:
+                Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
+                        Toast.LENGTH_SHORT).show();
                 break;
             case MEDIUM_ALERT_LEVEL:
+                Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
+                        Toast.LENGTH_SHORT).show();
                 break;
             case HIGH_ALERT_LEVEL:
+                Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
+                        Toast.LENGTH_SHORT).show();
                 break;
             case ARRIVE_ALERT_LEVEL:
+                Toast.makeText(getContext(), "You've arrived on your destination", Toast.LENGTH_SHORT).show();
                 break;
-            default:
+            case NONE_ALERT_LEVEL:
+                Toast.makeText(getContext(), "Navigation Started", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
-
     @Override
     public void onProgressChange(Location location, RouteProgress routeProgress) {
-        Log.d(TAG, Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100) / 100) + " km");
+        Log.d(TAG, Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km");
+        Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void userOffRoute(Location location) {
+        Position newOrigin = Position.fromCoordinates(location.getLongitude(), location.getLatitude());
+
+        navigation.getRoute(newOrigin, destination, new Callback<DirectionsResponse>() {
+            @Override
+            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                List<DirectionsRoute> directionsRoutes = response.body().getRoutes();
+
+                for (int i = 0; i < directionsRoutes.size(); i++) {
+                    DirectionsRoute directionsRoute = directionsRoutes.get(i);
+
+                    navigation.startNavigation(directionsRoute);
+                    navigation.updateRoute(directionsRoute);
+
+                    LineString lineString = LineString.fromPolyline(directionsRoute.getGeometry(), Constants.OSRM_PRECISION_V5);
+                    List<Position> coordinates = lineString.getCoordinates();
+                    Log.d(TAG, String.valueOf(coordinates));
+
+                    for (int j = 0; j < coordinates.size(); j++) {
+                        double newLat = coordinates.get(j).getLatitude() * .10;
+                        double newLong = coordinates.get(j).getLongitude() * .10;
+
+                        latLngList.add(new LatLng(newLat, newLong));
+                    }
+
+                    mapboxMap.addPolyline(new PolylineOptions()
+                            .addAll(latLngList)
+                            .color(ContextCompat.getColor(getContext(), R.color.colorRed))
+                            .width(5));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

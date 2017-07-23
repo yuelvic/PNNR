@@ -39,9 +39,11 @@ public interface ApiService {
     Observable<User> updateUser(@Header("user-token") String userToken, @Path("app_id") String app_id,
                                 @Path("rest_key") String rest_key, @Path("object_id") String objectId, @Body User user);
 
+
     @GET("{app_id}/{rest_key}/users/logout")
-    Observable<Boolean> logout(@Path("app_id") String app_id, @Path("rest_key") String rest_key,
-                               @Header("user-token") String token);
+    Observable<Boolean> logout(@Path("app_id") String app_id,
+                            @Path("rest_key") String rest_key,
+                            @Header("user-token") String userToken);
 
     @Headers("Content-Type:application/json")
     @POST("{app_id}/{rest_key}/data/Store")

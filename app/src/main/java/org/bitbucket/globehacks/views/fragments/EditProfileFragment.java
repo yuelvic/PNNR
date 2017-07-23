@@ -1,6 +1,7 @@
 package org.bitbucket.globehacks.views.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by elthos on 7/22/17.
@@ -42,11 +44,13 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
 
     @BindView(R.id.edt_contact_number) EditText edtContactNumber;
     @BindView(R.id.edt_email) EditText edtEmail;
-    @BindView(R.id.edt_firstname) EditText edtFirstname;
-    @BindView(R.id.edt_lastname) EditText edtLastname;
+    @BindView(R.id.edt_firstname) EditText edtFirstName;
+    @BindView(R.id.edt_lastname) EditText edtLastName;
 
     @Inject ApiService apiService;
     @Inject Form form;
+
+    private SweetAlertDialog loadingDialog;
 
     public static EditProfileFragment newInstance() {
         return new EditProfileFragment();
@@ -73,27 +77,29 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
         initialize();
     }
 
+
+
     private void initialize() {
         form.check(edtContactNumber, RegexTemplate.NOT_EMPTY_PATTERN, "Required Field");
         form.checkLength(edtContactNumber, Range.equal(11), "Must be exactly 11 digits");
 //        form.check(edtEmail, RegexTemplate.EMAIL_PATTERN, "Must be a valid email address");
-        form.check(edtFirstname, RegexTemplate.NOT_EMPTY_PATTERN, "Required Field");
-        form.check(edtLastname, RegexTemplate.NOT_EMPTY_PATTERN, "Required Field");
+        form.check(edtFirstName, RegexTemplate.NOT_EMPTY_PATTERN, "Required Field");
+        form.check(edtLastName, RegexTemplate.NOT_EMPTY_PATTERN, "Required Field");
     }
 
     @OnClick(R.id.btn_update_profile)
     public void onClickedUpdate() {
        if (form.validate()) {
-           presenter.passInputs(edtFirstname.getText().toString(), edtLastname.getText().toString(), edtEmail.getText().toString(),
+           showProgressDialog();
+
+           presenter.passInputs(edtFirstName.getText().toString(), edtLastName.getText().toString(), edtEmail.getText().toString(),
                    edtContactNumber.getText().toString());
        }
     }
 
     @OnClick(R.id.btn_cancel)
     public void onClickedCancel() {
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
-        intent.putExtra("type", 0);
-        startActivity(intent);
+        getActivity().finish();
     }
 
     @Override
@@ -118,14 +124,31 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
 
     @Override
     public void onSuccess() {
+        hideProgressDialog();
+
         Toast.makeText(getContext(), "Profile successfully changed", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         intent.putExtra("type", 1);
         startActivity(intent);
+        getActivity().finish();
     }
 
     @Override
     public void onFailure() {
+        hideProgressDialog();
+
         Toast.makeText(getContext(), "Changing unsuccessful", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showProgressDialog(){
+        loadingDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+        loadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        loadingDialog.setTitleText("Loading. Please wait...");
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+    }
+
+    private void hideProgressDialog(){
+        loadingDialog.dismiss();
     }
 }

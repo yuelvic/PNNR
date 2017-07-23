@@ -152,8 +152,9 @@
                     android:padding="@dimen/margin_padding_size_medium"
                     fancy:fb_defaultColor="@color/colorPrimary"
                     fancy:fb_focusColor="@color/colorPrimaryDark"
-                    fancy:fb_radius="20dp"
+                    fancy:fb_radius="5dp"
                     fancy:fb_text="Sign up"
+                    fancy:fb_textFont="fonts/font_light.ttf"
                     fancy:fb_textColor="@color/colorWhite" />
 
                 <mehdi.sakout.fancybuttons.FancyButton
@@ -167,8 +168,9 @@
                     android:padding="@dimen/margin_padding_size_medium"
                     fancy:fb_defaultColor="@color/colorGrayDark"
                     fancy:fb_focusColor="@color/colorGray"
-                    fancy:fb_radius="20dp"
+                    fancy:fb_radius="5dp"
                     fancy:fb_text="Cancel"
+                    fancy:fb_textFont="fonts/font_light.ttf"
                     fancy:fb_textColor="@color/colorWhite" />
 
             </LinearLayout>

@@ -156,7 +156,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     private void init() {
         int type = getIntent().getIntExtra("type", 2);
-
         switch (type) {
             case 0:
                 profileFragment = ProfileFragment.newInstance();
@@ -177,6 +176,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                         .commit();
                 break;
         }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_home, HomeFragment.newInstance(), HomeFragment.class.getSimpleName())
+                .commit();
 
         navigationView.setOnNavigationItemSelectedListener(this);
 

@@ -46,10 +46,9 @@ public class EditProfilePresenter extends MvpBasePresenter<EditProfileView> {
                             PreferencesManager.putObject(Keys.USER, User.class);
                             mView.onSuccess();
                         },
-
                         throwable -> {
                             throwable.printStackTrace();
-                            mView.onSuccess();
+                            mView.onFailure();
                         });
     }
 

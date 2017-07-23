@@ -1,14 +1,12 @@
 package org.bitbucket.globehacks.views.fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import org.bitbucket.globehacks.GlobeHack;
-import org.bitbucket.globehacks.HomeActivity;
 import org.bitbucket.globehacks.MainActivity;
 import org.bitbucket.globehacks.R;
 import org.bitbucket.globehacks.UserActivity;
@@ -171,10 +168,12 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
     public void onSuccess() {
         startActivity(new Intent(getActivity(), MainActivity.class));
         getActivity().finish();
+        Log.e("Logout","Success");
     }
 
     @Override
     public void onFailure() {
+        Log.e("Logout","Failed");
 
     }
 
