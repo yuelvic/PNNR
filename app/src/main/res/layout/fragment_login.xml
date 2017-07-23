@@ -79,8 +79,9 @@
                 android:padding="@dimen/margin_padding_size_medium"
                 fancy:fb_defaultColor="@color/colorAccent"
                 fancy:fb_focusColor="@color/colorAccentDark"
-                fancy:fb_radius="20dp"
+                fancy:fb_radius="5dp"
                 fancy:fb_text="Login"
+                fancy:fb_textFont="fonts/font_light.ttf"
                 fancy:fb_textColor="@color/colorWhite" />
 
             <TextView
@@ -101,8 +102,9 @@
                 android:padding="@dimen/margin_padding_size_medium"
                 fancy:fb_defaultColor="@color/colorPrimary"
                 fancy:fb_focusColor="@color/colorPrimaryDark"
-                fancy:fb_radius="20dp"
+                fancy:fb_radius="5dp"
                 fancy:fb_text="Sign Up"
+                fancy:fb_textFont="fonts/font_light.ttf"
                 fancy:fb_textColor="@color/colorWhite" />
         </LinearLayout>
     </LinearLayout>
