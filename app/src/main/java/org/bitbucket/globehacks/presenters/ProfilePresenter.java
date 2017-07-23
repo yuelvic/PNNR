@@ -41,19 +41,16 @@ public class ProfilePresenter extends MvpBasePresenter<ProfileView> {
         checkProfileSubscription();
         profileSubscription = mView.getApiService()
                 .logout(mView.getApplicationId(), mView.getRestKey(), mView.getUser().getToken())
-                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         user -> {
-
+                            PreferencesManager.remove(Keys.USER);
+                            mView.onSuccess();
                         },
                         throwable -> {
                             throwable.printStackTrace();
                             mView.onFailure();
-                        },
-                        () -> {
-                            PreferencesManager.remove(Keys.USER);
-                            mView.onSuccess();
                         }
                 );
     }
