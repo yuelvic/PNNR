@@ -59,8 +59,8 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
         store.setAvailability(mView.getStoreAvailability());
         store.setOperationTime(mView.getStoreOperationTime());
         store.setOwner(mView.getStoreOwner());
-        store.setMobile(mView.getContactNumber());
-
+        store.setMobile(mView.getStoreContactNumber());
+        store.setAddress(mView.getStoreAddress());
 
         return store;
     }

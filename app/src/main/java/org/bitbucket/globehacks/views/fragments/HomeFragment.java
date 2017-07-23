@@ -516,7 +516,20 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     }
 
     @Override
-    public String getContactNumber() {
+    public String getStoreContactNumber() {
+        return getProfile().getMobile();
+    }
+
+    @Override
+    public String getStoreAddress() {
+        Geocoder geocoder = new Geocoder(getActivity());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(pinLatLng.getLatitude(), pinLatLng.getLongitude(), 1);
+            if (addresses.isEmpty()) return "";
+            return addresses.get(0).getAddressLine(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "";
     }
 

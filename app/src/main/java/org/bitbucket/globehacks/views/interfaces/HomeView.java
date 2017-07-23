@@ -21,7 +21,8 @@ public interface HomeView extends BaseView {
     String getStoreName();
     String getStoreOperationTime();
     String getStoreOwner();
-    String getContactNumber();
+    String getStoreContactNumber();
+    String getStoreAddress();
 
     double getMapNWLatitude();
     double getMapNWLongitude();

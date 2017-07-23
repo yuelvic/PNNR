@@ -17,6 +17,7 @@ public class Store {
     private boolean availability;
     @SerializedName("operation_time")
     private String operationTime;
+    private String address;
 
     public String getObjectId() {
         return objectId;
@@ -80,5 +81,21 @@ public class Store {
 
     public void setMobile(String contactNumber) {
         this.contactNumber = contactNumber;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
