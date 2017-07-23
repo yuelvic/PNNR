@@ -15,12 +15,14 @@ import java.util.List;
 
 public interface HomeView extends BaseView {
 
-    String getStoreName();
     double getStoreLatitude();
     double getStoreLongitude();
     boolean getStoreAvailability();
+    String getStoreName();
     String getStoreOperationTime();
     String getStoreOwner();
+    String getStoreContactNumber();
+    String getStoreAddress();
 
     double getMapNWLatitude();
     double getMapNWLongitude();

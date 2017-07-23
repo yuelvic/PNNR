@@ -5,6 +5,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -61,6 +62,7 @@ import org.bitbucket.globehacks.views.interfaces.HomeView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -72,6 +74,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 import static com.mapbox.services.android.navigation.v5.NavigationConstants.ARRIVE_ALERT_LEVEL;
 import static com.mapbox.services.android.navigation.v5.NavigationConstants.DEPART_ALERT_LEVEL;
 import static com.mapbox.services.android.navigation.v5.NavigationConstants.HIGH_ALERT_LEVEL;
@@ -91,6 +94,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     private static final String TAG = HomeFragment.class.getSimpleName();
 
+    private TextToSpeech textToSpeech;
 
 
     private static final int WILL_START_RENDERING_MAP = 11;
@@ -112,6 +116,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @BindView(R.id.view_store_info) View storeInfo;
     @BindView(R.id.tv_fullname) TextView tvFullname;
     @BindView(R.id.tv_number) TextView tvNumber;
+    @BindView(R.id.tv_address) TextView tvAddress;
 
     @Inject ApiService apiService;
 
@@ -202,6 +207,15 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         navigation.addAlertLevelChangeListener(this);
         navigation.addProgressChangeListener(this);
         navigation.addOffRouteListener(this);
+
+        textToSpeech =new TextToSpeech(getActivity().getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textToSpeech.setLanguage(Locale.US);
+                }
+            }
+        });
     }
 
 
@@ -325,7 +339,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         addStoreView.animate().translationY(homeView.getHeight()).start();
     }
 
-    @OnClick(R.id.tv_store_route)
+    @OnClick(R.id.btn_store_route)
     public void navigateToStore() {
         if (mapboxMap == null || mapboxMap.getMyLocation() == null) return;
 
@@ -503,6 +517,24 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     }
 
     @Override
+    public String getStoreContactNumber() {
+        return getProfile().getMobile();
+    }
+
+    @Override
+    public String getStoreAddress() {
+        Geocoder geocoder = new Geocoder(getActivity());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(pinLatLng.getLatitude(), pinLatLng.getLongitude(), 1);
+            if (addresses.isEmpty()) return "";
+            return addresses.get(0).getAddressLine(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    @Override
     public double getMapNWLatitude() {
         return latLngBounds.getNorthWest().getLatitude();
     }
@@ -533,7 +565,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
         hideProgressDialog();
         tvFullname.setText(store.getName());
-        tvNumber.setText("");
+        tvNumber.setText(store.getMobile());
+        tvAddress.setText(store.getAddress());
     }
 
     @Override
@@ -588,21 +621,26 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         switch (alertLevel) {
             case DEPART_ALERT_LEVEL:
                 Toast.makeText(getContext(), "Navigation Started", Toast.LENGTH_SHORT).show();
+                textToSpeech.speak("Navigation Started", TextToSpeech.QUEUE_FLUSH, null);
                 break;
             case LOW_ALERT_LEVEL:
                 Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
                         Toast.LENGTH_SHORT).show();
+                textToSpeech.speak(Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km remaining", TextToSpeech.QUEUE_FLUSH, null);
                 break;
             case MEDIUM_ALERT_LEVEL:
                 Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
                         Toast.LENGTH_SHORT).show();
+                textToSpeech.speak(Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km remaining", TextToSpeech.QUEUE_FLUSH, null);
                 break;
             case HIGH_ALERT_LEVEL:
                 Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
                         Toast.LENGTH_SHORT).show();
+                textToSpeech.speak(Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km remaining", TextToSpeech.QUEUE_FLUSH, null);
                 break;
             case ARRIVE_ALERT_LEVEL:
                 Toast.makeText(getContext(), "You've arrived on your destination", Toast.LENGTH_SHORT).show();
+                textToSpeech.speak("You've arrived on your destination", TextToSpeech.QUEUE_FLUSH, null);
                 break;
             case NONE_ALERT_LEVEL:
                 Toast.makeText(getContext(), "Navigation Started", Toast.LENGTH_SHORT).show();
