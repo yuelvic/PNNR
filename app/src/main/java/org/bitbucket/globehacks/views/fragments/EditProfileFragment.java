@@ -44,8 +44,8 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
 
     @BindView(R.id.edt_contact_number) EditText edtContactNumber;
     @BindView(R.id.edt_email) EditText edtEmail;
-    @BindView(R.id.edt_firstname) EditText edtFirstname;
-    @BindView(R.id.edt_lastname) EditText edtLastname;
+    @BindView(R.id.edt_firstname) EditText edtFirstName;
+    @BindView(R.id.edt_lastname) EditText edtLastName;
 
     @Inject ApiService apiService;
     @Inject Form form;
@@ -77,12 +77,14 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
         initialize();
     }
 
+
+
     private void initialize() {
         form.check(edtContactNumber, RegexTemplate.NOT_EMPTY_PATTERN, "Required Field");
         form.checkLength(edtContactNumber, Range.equal(11), "Must be exactly 11 digits");
 //        form.check(edtEmail, RegexTemplate.EMAIL_PATTERN, "Must be a valid email address");
-        form.check(edtFirstname, RegexTemplate.NOT_EMPTY_PATTERN, "Required Field");
-        form.check(edtLastname, RegexTemplate.NOT_EMPTY_PATTERN, "Required Field");
+        form.check(edtFirstName, RegexTemplate.NOT_EMPTY_PATTERN, "Required Field");
+        form.check(edtLastName, RegexTemplate.NOT_EMPTY_PATTERN, "Required Field");
     }
 
     @OnClick(R.id.btn_update_profile)
@@ -90,16 +92,14 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
        if (form.validate()) {
            showProgressDialog();
 
-           presenter.passInputs(edtFirstname.getText().toString(), edtLastname.getText().toString(), edtEmail.getText().toString(),
+           presenter.passInputs(edtFirstName.getText().toString(), edtLastName.getText().toString(), edtEmail.getText().toString(),
                    edtContactNumber.getText().toString());
        }
     }
 
     @OnClick(R.id.btn_cancel)
     public void onClickedCancel() {
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
-        intent.putExtra("type", 0);
-        startActivity(intent);
+        getActivity().finish();
     }
 
     @Override
@@ -130,6 +130,7 @@ public class EditProfileFragment extends MvpFragment<EditProfileView, EditProfil
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         intent.putExtra("type", 1);
         startActivity(intent);
+        getActivity().finish();
     }
 
     @Override

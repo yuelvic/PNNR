@@ -104,7 +104,7 @@
             fancy:fb_defaultColor="@color/colorAccent"
             fancy:fb_focusColor="@color/colorAccentDark"
             fancy:fb_radius="5dp"
-            fancy:fb_text="Notify store"
+            fancy:fb_text="LOCATE STORE"
             fancy:fb_textColor="@color/colorWhite"
             fancy:fb_textFont="fonts/font_light.ttf"
             fancy:fb_textSize="@dimen/text_size_medium" />

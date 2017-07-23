@@ -37,8 +37,7 @@ public class EditProfilePresenter extends MvpBasePresenter<EditProfileView> {
         Log.d(TAG, mView.getUser().getObjectId() + " " + mView.getUser().getToken());
 
         mView.getApiService()
-                .updateUser(mView.getApplicationId(), mView.getRestKey(), mView.getUser().getToken(),
-                        mView.getApplicationId(), mView.getRestKey(), mView.getUser().getObjectId(), user)
+                .updateUser(mView.getUser().getToken(), mView.getApplicationId(), mView.getRestKey(), mView.getUser().getObjectId(), user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -46,10 +45,9 @@ public class EditProfilePresenter extends MvpBasePresenter<EditProfileView> {
                             PreferencesManager.putObject(Keys.USER, User.class);
                             mView.onSuccess();
                         },
-
                         throwable -> {
                             throwable.printStackTrace();
-                            mView.onSuccess();
+                            mView.onFailure();
                         });
     }
 
