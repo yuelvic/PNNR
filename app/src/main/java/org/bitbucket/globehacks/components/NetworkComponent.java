@@ -1,5 +1,6 @@
 package org.bitbucket.globehacks.components;
 
+import org.bitbucket.globehacks.HomeActivity;
 import org.bitbucket.globehacks.modules.ApplicationModule;
 import org.bitbucket.globehacks.modules.NetworkModule;
 import org.bitbucket.globehacks.views.fragments.ChangePasswordFragment;
@@ -32,5 +33,7 @@ public interface NetworkComponent {
     void inject(ChangePasswordFragment changePasswordFragment);
 
     void inject(EditProfileFragment editProfileFragment);
+
+    void inject(HomeActivity homeActivity);
 
 }

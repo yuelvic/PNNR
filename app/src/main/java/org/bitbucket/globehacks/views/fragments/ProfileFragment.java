@@ -2,8 +2,10 @@ package org.bitbucket.globehacks.views.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.shawnlin.preferencesmanager.PreferencesManager;
 
@@ -69,8 +73,37 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
         initialize();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void getPhotoFromCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            getActivity().startActivityForResult(takePictureIntent, 1);
+        }
+    }
+
+    private void getPhotoFromGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 2);
+    }
+
+    public void update() {
+        Glide.with(getActivity()).load(getUser().getAvatar())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(civProfileImage);
+    }
+
     private void initialize() {
-//        civProfileImage.setImageResource();
+        Glide.with(getActivity()).load(getUser().getAvatar())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(civProfileImage);
         tvFullName.setText(getUser().getFirstname() + " " + getUser().getLastname());
         tvNumber.setText(getUser().getMobile());
         tvUserType.setText(getUser().getType());
@@ -79,14 +112,12 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
     @OnClick(R.id.civ_profile_image)
     public void changeProfilePicture() {
         new AlertDialog.Builder(getActivity())
-                .setTitle("Change profile picture")
-                .setMessage("Choose from..")
-                .setNeutralButton("Camera", (dialog, which) -> {
-
+                .setTitle("Choose from..")
+                .setItems(R.array.photo_mode, (dialog, which) -> {
+                    if (which == 0) getPhotoFromCamera();
+                    else getPhotoFromGallery();
                 })
-                .setNeutralButton("Gallery", (dialog, which) -> {
-
-                })
+                .create()
                 .show();
     }
 

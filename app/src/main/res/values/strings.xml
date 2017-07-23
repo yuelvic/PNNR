@@ -16,4 +16,9 @@
         <item>Customer</item>
     </string-array>
     <string name="title_activity_user">UserActivity</string>
+
+    <string-array name="photo_mode">
+        <item>Camera</item>
+        <item>Gallery</item>
+    </string-array>
 </resources>
