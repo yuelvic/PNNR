@@ -36,8 +36,7 @@ public interface ApiService {
 
     @Headers("Content-Type:application/json")
     @PUT("{app_id}/{rest_key}/users/{object_id}")
-    Observable<User> updateUser(@Header("application-id") String appId, @Header("secret-key") String restKey,
-                                @Header("user-token") String userToken, @Path("app_id") String app_id,
+    Observable<User> updateUser(@Header("user-token") String userToken, @Path("app_id") String app_id,
                                 @Path("rest_key") String rest_key, @Path("object_id") String objectId, @Body User user);
 
     @GET("{app_id}/{rest_key}/users/logout")
