@@ -2,6 +2,7 @@ package org.bitbucket.globehacks.presenters;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import com.shawnlin.preferencesmanager.PreferencesManager;
 
@@ -41,17 +42,16 @@ public class ProfilePresenter extends MvpBasePresenter<ProfileView> {
         checkProfileSubscription();
         profileSubscription = mView.getApiService()
                 .logout(mView.getApplicationId(), mView.getRestKey(), mView.getUser().getToken())
-                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        user -> {
-                            PreferencesManager.remove(Keys.USER);
-                            mView.onSuccess();
+                        o -> {
+
                         },
-                        throwable -> {
-                            throwable.printStackTrace();
-                            mView.onFailure();
-                        }
+                        Throwable::printStackTrace,
+                        () -> {}
                 );
+        PreferencesManager.remove(Keys.USER);
+        mView.onSuccess();
     }
 }

@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.Icon;
+import com.mapbox.mapboxsdk.annotations.IconFactory;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
@@ -155,6 +157,9 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
 
         latLngList = new ArrayList<>();
+
+        if (!getProfile().getType().equals("owner"))
+            fabStore.setVisibility(View.GONE);
 
         fabStore.setOnClickListener(this);
         fabCancel.setOnClickListener(this);
@@ -588,7 +593,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     public void onGeoPointLoadSuccess(List<GeoPoint> geoPoints) {
         // causing polyline to remove while moving the camera
         // mapboxMap.clear();
-
+        IconFactory iconFactory = IconFactory.getInstance(getActivity());
+//        Icon icon = iconFactory.fromPath()
         for (GeoPoint geoPoint : geoPoints) {
             mapboxMap.addMarker(new MarkerOptions()
                     .position(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()))
