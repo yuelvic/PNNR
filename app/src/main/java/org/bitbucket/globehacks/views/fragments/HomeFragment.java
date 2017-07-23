@@ -25,6 +25,7 @@ import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+import com.mapbox.mapboxsdk.constants.MapboxConstants;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.maps.MapView;
@@ -618,28 +619,46 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
     @Override
     public void onAlertLevelChange(int alertLevel, RouteProgress routeProgress) {
+        CameraPosition cameraPosition;
+
         switch (alertLevel) {
             case DEPART_ALERT_LEVEL:
-                Toast.makeText(getContext(), "Navigation Started", Toast.LENGTH_SHORT).show();
-                textToSpeech.speak("Navigation Started", TextToSpeech.QUEUE_FLUSH, null);
+                cameraPosition = new CameraPosition.Builder()
+                        .target(new LatLng(mapboxMap.getMyLocation()))
+                        .zoom(17)
+                        .tilt(MapboxConstants.MAXIMUM_TILT)
+                        .build();
+
+                mapboxMap.setCameraPosition(cameraPosition);
+                mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 5000, null);
+
+                textToSpeech.speak("Navigation Started. You are currently at " + routeProgress.currentLegProgress().getCurrentStep().getName(),
+                        TextToSpeech.QUEUE_FLUSH, null);
                 break;
             case LOW_ALERT_LEVEL:
-                Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
-                        Toast.LENGTH_SHORT).show();
-                textToSpeech.speak(Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km remaining", TextToSpeech.QUEUE_FLUSH, null);
+                textToSpeech.speak("About " + Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) +
+                        " km remaining, " + routeProgress.currentLegProgress().getUpComingStep().getManeuver().getInstruction(),
+                        TextToSpeech.QUEUE_FLUSH, null);
                 break;
             case MEDIUM_ALERT_LEVEL:
-                Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
-                        Toast.LENGTH_SHORT).show();
-                textToSpeech.speak(Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km remaining", TextToSpeech.QUEUE_FLUSH, null);
+                textToSpeech.speak("About " + Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) +
+                                " km remaining, " + routeProgress.currentLegProgress().getUpComingStep().getManeuver().getInstruction(),
+                        TextToSpeech.QUEUE_FLUSH, null);
                 break;
             case HIGH_ALERT_LEVEL:
-                Toast.makeText(getContext(), Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km",
-                        Toast.LENGTH_SHORT).show();
-                textToSpeech.speak(Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) + " km remaining", TextToSpeech.QUEUE_FLUSH, null);
+                textToSpeech.speak("About " + Double.toString(Math.round((routeProgress.getDistanceRemaining() / 1000) * 100.0) / 100.0) +
+                                " km remaining, " + routeProgress.currentLegProgress().getUpComingStep().getManeuver().getInstruction(),
+                        TextToSpeech.QUEUE_FLUSH, null);
                 break;
             case ARRIVE_ALERT_LEVEL:
-                Toast.makeText(getContext(), "You've arrived on your destination", Toast.LENGTH_SHORT).show();
+                cameraPosition = new CameraPosition.Builder()
+                        .target(new LatLng(mapboxMap.getMyLocation()))
+                        .zoom(15)
+                        .build();
+
+                mapboxMap.setCameraPosition(cameraPosition);
+                mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 5000, null);
+
                 textToSpeech.speak("You've arrived on your destination", TextToSpeech.QUEUE_FLUSH, null);
                 break;
             case NONE_ALERT_LEVEL:
