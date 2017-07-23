@@ -25,7 +25,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_profile"/>
+            android:src="@drawable/ic_default"/>
 
 
         <LinearLayout
@@ -81,19 +81,7 @@
             fancy:fb_text="Edit Profile"
             fancy:fb_textSize="@dimen/text_size_medium" />
 
-        <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_profile_preferences"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            fancy:fb_defaultColor="@color/colorPrimary"
-            fancy:fb_focusColor="@color/colorPrimaryDark"
-            fancy:fb_radius="5dp"
-            fancy:fb_textColor="@color/colorWhite"
-            fancy:fb_textFont="fonts/font_light.ttf"
-            fancy:fb_text="Edit Preferences"
-            fancy:fb_textSize="@dimen/text_size_medium" />
+
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/btn_profile_change_password"
