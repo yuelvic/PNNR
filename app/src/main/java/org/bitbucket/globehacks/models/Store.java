@@ -74,11 +74,11 @@ public class Store {
         this.operationTime = operationTime;
     }
 
-    public String getContactNumber() {
+    public String getMobile() {
         return contactNumber;
     }
 
-    public void setContactNumber(String contactNumber) {
+    public void setMobile(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 }

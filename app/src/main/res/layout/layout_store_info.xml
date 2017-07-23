@@ -1,10 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:fancy="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile_frame"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary">
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profile_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:layout_width="match_parent"
@@ -62,7 +61,7 @@
                 android:text="Emman Garcia"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/text_size_large"/>
+                android:textSize="@dimen/text_size_xlarge"/>
 
             <TextView
                 android:id="@+id/tv_number"
@@ -84,48 +83,31 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_store_notify"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_weight="0.5"
-                fancy:fb_defaultColor="@color/colorAccent"
-                fancy:fb_focusColor="@color/colorAccentDark"
-                fancy:fb_radius="5dp"
-                fancy:fb_text="Notify store"
-                fancy:fb_textColor="@color/colorWhite"
-                fancy:fb_textFont="fonts/font_light.ttf"
-                fancy:fb_textSize="@dimen/text_size_medium"/>
-
-
-        </LinearLayout>
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/lv_main"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="@dimen/margin_padding_size_large">
 
-        <TextView
-            android:id="@+id/tv_store_route"
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/btn_store_route"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ROUTE TO STORE"
-            android:padding="@dimen/margin_padding_size_small"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/text_size_medium"/>
-
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_padding_size_medium"
+            android:layout_weight="0.5"
+            fancy:fb_defaultColor="@color/colorAccent"
+            fancy:fb_focusColor="@color/colorAccentDark"
+            fancy:fb_radius="5dp"
+            fancy:fb_text="Notify store"
+            fancy:fb_textColor="@color/colorWhite"
+            fancy:fb_textFont="fonts/font_light.ttf"
+            fancy:fb_textSize="@dimen/text_size_medium" />
     </LinearLayout>
-
 
 </RelativeLayout>

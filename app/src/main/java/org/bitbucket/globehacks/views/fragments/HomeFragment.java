@@ -316,7 +316,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         addStoreView.animate().translationY(homeView.getHeight()).start();
     }
 
-    @OnClick(R.id.tv_store_route)
+    @OnClick(R.id.btn_store_route)
     public void navigateToStore() {
         if (mapboxMap == null || mapboxMap.getMyLocation() == null) return;
 
@@ -360,8 +360,6 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
                                 .addAll(latLngList)
                                 .color(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark))
                                 .width(5));
-
-
 
                     }
                 }
@@ -501,6 +499,11 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     }
 
     @Override
+    public String getContactNumber() {
+        return "";
+    }
+
+    @Override
     public double getMapNWLatitude() {
         return latLngBounds.getNorthWest().getLatitude();
     }
@@ -531,7 +534,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
 
         hideProgressDialog();
         tvFullname.setText(store.getName());
-        tvNumber.setText("");
+        tvNumber.setText(store.getMobile());
     }
 
     @Override
