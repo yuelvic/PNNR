@@ -49,7 +49,7 @@ public class SignupPresenter extends MvpBasePresenter<SignupView> {
         user.setLastname(mView.getLastName());
         user.setPassword(mView.getPassword());
         user.setMobile(mView.getMobile());
-        user.setType("owner");
+        user.setType(mView.getUserType());
 
         return user;
     }
