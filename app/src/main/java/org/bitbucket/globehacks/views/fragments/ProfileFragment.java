@@ -124,10 +124,7 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
         startActivity(new Intent(getActivity(), UserActivity.class));
     }
 
-    @OnClick(R.id.btn_profile_preferences)
-    public void onClickProfilePref() {
 
-    }
 
     @OnClick(R.id.btn_profile_change_password)
     public void onClickChangedPassword() {
