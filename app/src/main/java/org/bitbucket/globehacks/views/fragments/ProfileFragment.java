@@ -100,6 +100,7 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
         Glide.with(getActivity()).load(getUser().getAvatar())
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
+                .placeholder(R.drawable.ic_default)
                 .into(civProfileImage);
         tvFullName.setText(getUser().getFirstname() + " " + getUser().getLastname());
         tvNumber.setText(getUser().getMobile());
