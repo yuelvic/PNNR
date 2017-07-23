@@ -7,7 +7,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="170dp"
         android:scaleType="centerCrop"
         android:src="@drawable/bg_store"/>
 
@@ -36,8 +36,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_store_profile_image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
             android:scaleType="centerCrop"
@@ -72,14 +72,25 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_medium"/>
 
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_height="@dimen/margin_padding_size_large"
+                android:tint="@color/colorAccent"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_home" />
+
+
+
             <TextView
-                android:id="@+id/tv_user_type"
+                android:id="@+id/tv_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Store Owner"
+                android:text="Makati City, Philippines"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_medium"/>
+
 
         </LinearLayout>
 
@@ -92,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:paddingBottom="@dimen/margin_padding_size_large">
+        android:paddingBottom="@dimen/margin_padding_size_small">
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/btn_store_route"

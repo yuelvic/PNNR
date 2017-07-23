@@ -100,6 +100,7 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
         Glide.with(getActivity()).load(getUser().getAvatar())
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
+                .placeholder(R.drawable.ic_default)
                 .into(civProfileImage);
         tvFullName.setText(getUser().getFirstname() + " " + getUser().getLastname());
         tvNumber.setText(getUser().getMobile());
@@ -123,10 +124,7 @@ public class ProfileFragment extends MvpFragment<ProfileView, ProfilePresenter> 
         startActivity(new Intent(getActivity(), UserActivity.class));
     }
 
-    @OnClick(R.id.btn_profile_preferences)
-    public void onClickProfilePref() {
 
-    }
 
     @OnClick(R.id.btn_profile_change_password)
     public void onClickChangedPassword() {

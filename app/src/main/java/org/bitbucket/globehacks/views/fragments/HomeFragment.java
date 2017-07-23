@@ -118,6 +118,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
     @BindView(R.id.view_store_info) View storeInfo;
     @BindView(R.id.tv_fullname) TextView tvFullname;
     @BindView(R.id.tv_number) TextView tvNumber;
+    @BindView(R.id.tv_address) TextView tvAddress;
 
     @Inject ApiService apiService;
 
@@ -570,6 +571,7 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         hideProgressDialog();
         tvFullname.setText(store.getName());
         tvNumber.setText(store.getMobile());
+        tvAddress.setText(store.getAddress());
     }
 
     @Override
