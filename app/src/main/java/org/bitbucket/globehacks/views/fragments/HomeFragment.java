@@ -584,6 +584,8 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         hideProgressDialog();
         mapboxMap.clear();
         resetStoreForm();
+
+        onCameraIdle();
     }
 
     @Override
@@ -596,9 +598,10 @@ public class HomeFragment extends MvpFragment<HomeView, HomePresenter> implement
         // causing polyline to remove while moving the camera
         // mapboxMap.clear();
         IconFactory iconFactory = IconFactory.getInstance(getActivity());
-//        Icon icon = iconFactory.fromPath()
+        Icon icon = iconFactory.fromResource(R.drawable.ic_store);
         for (GeoPoint geoPoint : geoPoints) {
             mapboxMap.addMarker(new MarkerOptions()
+                    .setIcon(icon)
                     .position(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()))
                     .title(geoPoint.getMetadata().getObjectId()));
 
