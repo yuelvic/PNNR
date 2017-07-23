@@ -36,25 +36,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void init() {
-        int type = getIntent().getIntExtra("type", 2);
-
-        switch (type) {
-            case 0:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_home, ProfileFragment.newInstance(), ProfileFragment.class.getSimpleName())
-                        .commit();
-                break;
-            case 1:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_home, HomeFragment.newInstance(), HomeFragment.class.getSimpleName())
-                        .commit();
-                break;
-            default:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_home, HomeFragment.newInstance(), HomeFragment.class.getSimpleName())
-                        .commit();
-                break;
-        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_home, HomeFragment.newInstance(), HomeFragment.class.getSimpleName())
+                .commit();
 
         navigationView.setOnNavigationItemSelectedListener(this);
 
